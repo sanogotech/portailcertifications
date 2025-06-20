@@ -38,6 +38,24 @@
   z-index: 1;
 }
 
+
+.hero-section h1  {
+    color: rgba(0,0,0,0.9); /* Noir avec 90% d'opacité */
+    text-shadow: 
+        0 2px 4px rgba(255,255,255,0.3), /* Ombre blanche pour effet de profondeur */
+        0 4px 8px rgba(0,0,0,0.1); /* Ombre noire subtile */
+    transition: all 0.3s ease;
+}
+
+/* Effet au survol pour interactivité */
+.hero-section h1:hover i {
+    color: rgba(0,0,0,1); /* Noir pur au survol */
+    text-shadow: 
+        0 3px 6px rgba(255,255,255,0.4),
+        0 6px 12px rgba(0,0,0,0.15);
+    transform: scale(1.05);
+}
+
 /* Onglets avec style dynamique */
 .nav-tabs .nav-link {
   font-weight: 600;
@@ -192,9 +210,16 @@
       <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInDown">
         <i class="fas fa-certificate me-2"></i>Portail des Certifications
       </h1>
-      <p class="lead mb-4 animate__animated animate__fadeIn animate__delay-1s">
-        Votre passerelle vers les certifications Projet & IT les plus reconnues
-      </p>
+     <p class="lead mb-4 animate__animated animate__fadeIn animate__delay-1s" 
+   style="color: #0066cc; 
+          text-shadow: 0 2px 4px rgba(0,102,204,0.2);
+          font-weight: 500;
+          background: linear-gradient(to right, #0066cc, #0099ff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;">
+  Votre passerelle vers les certifications Projet & IT les plus reconnues
+</p>
       
   </section>
 
