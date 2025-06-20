@@ -1,0 +1,473 @@
+/* style.css : effet "whaou" moderne et responsive */
+
+/* Variables CSS pour les couleurs et gradients */
+:root {
+  --primary-color: #0d6efd; /* Bleu principal (Bootstrap primary) */
+  --secondary-color: #6c757d; /* Gris secondaire (Bootstrap secondary) */
+  --success-color: #28a745; /* Vert succès (Bootstrap success) */
+  --info-color: #0dcaf0; /* Bleu info (Bootstrap info) */
+  --warning-color: #ffc107; /* Jaune warning (Bootstrap warning) */
+  --dark-color: #212529; /* Noir texte foncé */
+  --light-text-color: #f8f9fa; /* Texte clair */
+  --text-color: #343a40; /* Texte par défaut */
+  --light-bg: #ffffff; /* Fond clair */
+  --lighter-bg: #f8f9fa; /* Fond très clair */
+  --border-color: #e0e0e0; /* Couleur de bordure */
+  --shadow-light: rgba(0, 0, 0, 0.08);
+  --shadow-medium: rgba(0, 0, 0, 0.12);
+
+  /* Gradients */
+  --primary-gradient: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+  --secondary-gradient: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%);
+  --success-gradient: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+  --dark-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
+  --danger-gradient: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+  --warning-gradient: linear-gradient(135deg, #f46b45 0%, #eea849 100%);
+}
+
+/* General Body Styling */
+body {
+  background: linear-gradient(to right, var(--lighter-bg), #e9ecef);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+}
+
+/* General Headings H1 */
+h1 {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--dark-color);
+  text-shadow: 1px 1px 2px #ced4da;
+}
+
+/* General Headings H3 (will be overridden by .tab-pane h3 for specific sections) */
+h3 {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--dark-color);
+  text-shadow: 1px 1px 2px #ced4da;
+}
+
+/* Main Navigation Tabs Styling */
+.nav-tabs {
+  border-bottom: none; /* Remove default nav-tabs border */
+  margin-bottom: 20px; /* Space between tabs and content */
+}
+
+.nav-tabs .nav-link {
+  font-weight: 600;
+  color: var(--primary-color);
+  border-radius: 8px 8px 0 0;
+  transition: all 0.3s ease-in-out;
+  padding: 12px 20px; /* Adjusted padding */
+  background-color: var(--lighter-bg); /* Give tabs a background */
+  border: 1px solid var(--border-color); /* Add border to tabs */
+  border-bottom: none; /* No bottom border for tabs to blend with content */
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: var(--border-color);
+  color: var(--primary-color);
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.nav-tabs .nav-link.active {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1); /* Shadow for active tab */
+  transform: translateY(0); /* Remove lift for active tab */
+}
+
+/* Card Styling (General) */
+.card {
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card-body {
+  background-color: var(--light-bg);
+  border-radius: 20px;
+  padding: 25px;
+}
+
+.card-header {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Button Styling (General) */
+.btn {
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+  border-color: var(--primary-color);
+}
+
+/* Alert Success Styling */
+.alert-success {
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(25, 135, 84, 0.3);
+}
+
+/* Quiz Container Styling */
+.quiz-container {
+  margin-top: 30px;
+  min-height: 500px;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.6s ease-in-out; /* Uses the general fadeIn */
+}
+
+/* Keyframe for Fade In animation (general) */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* List Group Item Styling (for quiz/learn lists) */
+.list-group-item {
+  transition: all 0.2s;
+  margin-bottom: 8px;
+  border-radius: 8px !important;
+  border-left: 3px solid transparent;
+}
+
+.list-group-item:hover {
+  transform: translateX(5px);
+  background-color: var(--lighter-bg);
+  border-left-color: var(--primary-color);
+}
+
+/* Learn Content Styling */
+.learn-content {
+  min-height: 400px;
+}
+
+.learn-content .card {
+  border: none;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Animations (Pulse) */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.pulse-animation {
+  animation: pulse 2s infinite;
+}
+
+/* Utility Classes */
+.bg-purple {
+  background-color: #6f42c1 !important;
+}
+
+.text-purple {
+  color: #6f42c1 !important;
+}
+
+.border-start-5 {
+  border-left-width: 5px !important;
+}
+
+/* Gradient background utility classes */
+.bg-primary-gradient {
+  background: var(--primary-gradient);
+}
+.bg-success-gradient {
+  background: var(--success-gradient);
+}
+.bg-danger-gradient {
+  background: var(--danger-gradient);
+}
+.bg-warning-gradient {
+  background: var(--warning-gradient);
+}
+
+/* Table Styling */
+.table-sm td, .table-sm th {
+  padding: 0.5rem;
+}
+
+.progress {
+  border-radius: 5px;
+}
+
+/* Specific Tab Pane Styling (for certification details) */
+.tab-pane {
+  background-color: var(--light-bg);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 20px var(--shadow-light);
+  margin-bottom: 25px;
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  animation: fadeIn 0.8s ease-out; /* Specific fade for tab-pane */
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.tab-pane:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px var(--shadow-medium);
+}
+
+/* Headings H3 for certification titles (more specific than general h3) */
+.tab-pane h3 {
+  font-size: 2.3rem;
+  color: var(--primary-color);
+  margin-bottom: 25px;
+  text-align: left; /* Overrides general h3 center */
+  border-bottom: 3px solid var(--primary-color);
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: none; /* Remove general h3 text-shadow */
+}
+
+.tab-pane h3 .fas {
+  font-size: 1.8rem;
+  margin-right: 12px;
+}
+
+/* Sub-headings H4 within certification sections */
+.tab-pane h4 {
+  font-size: 1.6rem;
+  color: var(--dark-color);
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.tab-pane h4 .fas {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  margin-right: 10px;
+}
+
+/* General Paragraphs within tab-pane */
+.tab-pane p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-color);
+  margin-bottom: 15px;
+}
+
+.tab-pane p strong {
+  color: var(--dark-color);
+  font-weight: 700;
+}
+
+/* Certification Section containers for better visual grouping */
+.certification-section {
+  background-color: var(--lighter-bg);
+  border-left: 5px solid var(--info-color);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.03);
+}
+
+.certification-section h4 {
+  margin-top: 0;
+  color: var(--dark-color);
+}
+
+.certification-section p {
+  margin-bottom: 0;
+}
+
+/* Unordered Lists (ul) - General Styling within certification-details */
+.certification-details ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+/* List Items (li) within certification-details */
+.certification-details ul li {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: flex-start;
+}
+
+.certification-details ul li:last-child {
+  border-bottom: none;
+}
+
+/* Custom bullet point with Font Awesome icon for main list items */
+.certification-details ul li:before {
+  content: "\f058"; /* Font Awesome Check-Circle icon */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: var(--success-color);
+  margin-right: 10px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  flex-shrink: 0;
+}
+
+/* Nested Unordered Lists - specific details like eligibility or content covered */
+.certification-details ul ul {
+  margin-top: 8px;
+  margin-left: 30px;
+  padding: 0;
+  list-style: disc;
+}
+
+.certification-details ul ul li {
+  font-size: 1rem;
+  padding: 5px 0;
+  border-bottom: none;
+  line-height: 1.6;
+}
+
+.certification-details ul ul li:before {
+  content: "";
+  margin-right: 0;
+}
+
+/* Emphasis on strong tags within lists for clarity */
+.certification-details ul li strong {
+  color: var(--dark-color);
+  font-weight: 700;
+}
+
+/* Styling for inline icons/emojis */
+.certification-details ul li .fas,
+.certification-details ul li .far {
+  color: var(--primary-color);
+  margin-left: 8px;
+}
+
+/* Custom emoji styling based on icon type */
+.certification-details ul li .fas.fa-globe-americas,
+.certification-details ul li .fas.fa-language { color: var(--info-color); }
+.certification-details ul li .fas.fa-university,
+.certification-details ul li .fas.fa-building { color: var(--secondary-color); }
+.certification-details ul li .fas.fa-laptop { color: var(--dark-color); }
+.certification-details ul li .fas.fa-balance-scale { color: var(--warning-color); }
+.certification-details ul li .fas.fa-code-branch { color: var(--dark-color); }
+.certification-details ul li .fas.fa-sitemap { color: var(--dark-color); }
+.certification-details ul li .fas.fa-dna { color: var(--success-color); }
+.certification-details ul li .fas.fa-people-carry { color: var(--warning-color); }
+.certification-details ul li .fas.fa-project-diagram { color: var(--info-color); }
+.certification-details ul li .fas.fa-trophy { color: gold; }
+.certification-details ul li .fas.fa-certificate { color: silver; }
+
+/* Emojis (specific class for emoji spans) */
+.certification-details ul li span.emoji {
+    margin-left: 8px;
+    font-size: 1.1em;
+}
+
+/* Button styling specific to tab-pane primary buttons */
+.tab-pane .btn-primary {
+  background: var(--primary-gradient);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-pane .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+  opacity: 0.9;
+  filter: brightness(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* General responsive adjustments */
+  h1, h3 {
+    font-size: 1.5rem;
+  }
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .card-body {
+    padding: 15px;
+  }
+  #quiz .row, #learn .row {
+    flex-direction: column;
+  }
+  .list-group {
+    margin-bottom: 20px;
+  }
+
+  /* Specific tab-pane responsive adjustments */
+  .tab-pane {
+    padding: 20px;
+  }
+
+  .tab-pane h3 {
+    font-size: 1.8rem;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+  }
+
+  .tab-pane h3 .fas {
+    font-size: 1.5rem;
+  }
+
+  .tab-pane h4 {
+    font-size: 1.4rem;
+    margin-top: 25px;
+  }
+
+  .tab-pane h4 .fas {
+    font-size: 1.1rem;
+  }
+
+  .tab-pane p,
+  .certification-details ul li {
+    font-size: 1rem;
+  }
+
+  .certification-details ul li:before {
+    font-size: 1rem;
+  }
+
+  .certification-details ul ul {
+    margin-left: 20px;
+  }
+
+  .tab-pane .btn-primary {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}

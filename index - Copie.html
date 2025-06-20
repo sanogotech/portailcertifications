@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portail Certifications Projet & IT</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+      --secondary-gradient: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%);
+      --success-gradient: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+      --dark-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
+    }
+    
+    body {
+      background: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #343a40;
+      overflow-x: hidden;
+    }
+    
+    .hero-section {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      transform: rotate(30deg);
+      z-index: 1;
+    }
+    
+    .nav-tabs .nav-link {
+      font-weight: 600;
+      padding: 1rem 1.5rem;
+      color: #495057;
+      border: none;
+      position: relative;
+      transition: all 0.3s;
+    }
+    
+    .nav-tabs .nav-link.active {
+      color: #0d6efd;
+      background: transparent;
+    }
+    
+    .nav-tabs .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 3px;
+      background: var(--primary-gradient);
+      border-radius: 3px 3px 0 0;
+    }
+    
+    .nav-tabs .nav-link:hover:not(.active) {
+      color: #0d6efd;
+      transform: translateY(-2px);
+    }
+    
+    .cert-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      background: white;
+    }
+    
+    .cert-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+    
+    .cert-header {
+      padding: 1.5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cert-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.1);
+    }
+    
+    .capm-header { background: var(--primary-gradient); }
+    .pmp-header { background: var(--secondary-gradient); }
+    .prince2-header { background: var(--success-gradient); }
+    .scrum-header { background: linear-gradient(135deg, #f46b45 0%, #eea849 100%); }
+    .itil-header { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+    .cobit-header { background: linear-gradient(135deg, #8e0e00 0%, #1f1c18 100%); }
+    .togaf-header { background: var(--dark-gradient); }
+    
+    .cert-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    .quiz-btn {
+      border: none;
+      background: var(--primary-gradient);
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(58, 123, 213, 0.3);
+    }
+    
+    .quiz-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(58, 123, 213, 0.4);
+      color: white;
+    }
+    
+    .feature-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #ff4757;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      box-shadow: 0 2px 10px rgba(255, 71, 87, 0.5);
+    }
+    
+    @media (max-width: 768px) {
+      .nav-tabs .nav-link {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+      
+      .hero-section {
+        padding: 2rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero-section text-center">
+    <div class="container position-relative" style="z-index: 2;">
+      <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInDown">
+        <i class="fas fa-certificate me-2"></i>Portail des Certifications
+      </h1>
+      <p class="lead mb-4 animate__animated animate__fadeIn animate__delay-1s">
+        Votre passerelle vers les certifications Projet & IT les plus reconnues
+      </p>
+      <div class="d-flex justify-content-center gap-3 animate__animated animate__fadeIn animate__delay-2s">
+        <button class="btn btn-light btn-lg px-4 py-2 rounded-pill fw-bold">
+          <i class="fas fa-play me-2"></i>Démarrer
+        </button>
+        <button class="btn btn-outline-light btn-lg px-4 py-2 rounded-pill">
+          <i class="fas fa-info-circle me-2"></i>En savoir plus
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="container py-5">
+    <ul class="nav nav-tabs justify-content-center mb-4" id="certTabs" role="tablist">
+	
+	 <li class="nav-item" role="presentation">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#guide" type="button">
+          <i class="fas fa-book-open me-2"></i>Guide
+        </button>
+		
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="capm-tab" data-bs-toggle="tab" data-bs-target="#capm" type="button">
+          <i class="fas fa-certificate me-2"></i>CAPM
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pmp-tab" data-bs-toggle="tab" data-bs-target="#pmp" type="button">
+          <i class="fas fa-award me-2"></i>PMP
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="prince2-tab" data-bs-toggle="tab" data-bs-target="#prince2" type="button">
+          <i class="fas fa-chess me-2"></i>PRINCE2
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="scrum-tab" data-bs-toggle="tab" data-bs-target="#scrum" type="button">
+          <i class="fas fa-arrows-rotate me-2"></i>SCRUM
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="itil-tab" data-bs-toggle="tab" data-bs-target="#itil" type="button">
+          <i class="fas fa-server me-2"></i>ITIL
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="cobit-tab" data-bs-toggle="tab" data-bs-target="#cobit" type="button">
+          <i class="fas fa-shield-alt me-2"></i>COBIT
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="togaf-tab" data-bs-toggle="tab" data-bs-target="#togaf" type="button">
+          <i class="fas fa-building me-2"></i>TOGAF
+        </button>
+      </li>
+	  
+	    
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#quiz" type="button">
+          <i class="fas fa-question-circle me-2"></i>Quiz
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#learn" type="button">
+          <i class="fas fa-graduation-cap me-2"></i>Learn
+        </button>
+      </li>
+    </ul>
+
+        <div class="tab-content" id="certTabsContent">
+            <div class="tab-pane fade show active" id="guide" role="tabpanel" aria-labelledby="guide-tab">
+                <h3>Guide d'utilisation du Portail</h3>
+                <p>Bienvenue sur le portail des certifications Projet & IT. Voici comment tirer le meilleur parti de cet outil :</p>
+                <ul>
+                    <li><strong>Certifications :</strong> Explorez les différentes certifications (CAPM, PMP, PRINCE2, SCRUM, ITIL, COBIT, TOGAF) pour connaître leurs définitions, objectifs, recommandations, organismes, conditions, coûts et structures.</li>
+                    <li><strong>Quiz :</strong> Testez vos connaissances grâce à des quiz interactifs pour chaque certification. Sélectionnez un quiz et répondez aux questions pour évaluer votre niveau.</li>
+                    <li><strong>Learn :</strong> Accédez à des modules d'apprentissage détaillés pour approfondir vos connaissances sur des sujets clés de la gestion de projet et de l'IT.</li>
+                </ul>
+                <p>Utilisez les onglets ci-dessus pour naviguer entre les différentes sections.</p>
+            </div>
+  
+		    <div class="tab-pane fade" id="capm" role="tabpanel" aria-labelledby="capm-tab">
+  <h3>CAPM - Certified Associate in Project Management</h3>
+  <p><strong>Définition :</strong> La certification CAPM du Project Management Institute (PMI) est une certification d'entrée de gamme conçue pour les personnes qui souhaitent démontrer leur compréhension des principes fondamentaux de la gestion de projet. Elle est basée sur le PMBOK Guide et couvre les cinq groupes de processus et les dix domaines de connaissances en gestion de projet.</p>
+  <p><strong>Objectif :</strong> Fournir une reconnaissance professionnelle aux individus débutant leur carrière dans la gestion de projet et les aider à acquérir un vocabulaire standardisé et une structure de travail cohérente.</p>
+  <p><strong>Recommandations :</strong> Idéal pour les étudiants, assistants chefs de projet, coordinateurs de projet et toute personne envisageant de devenir chef de projet. Elle est souvent utilisée comme tremplin vers la certification PMP.</p>
+  <ul>
+    <li><strong>Organisme :</strong> PMI (Project Management Institute)</li>
+    <li><strong>Langues :</strong> Anglais, Français, Espagnol, Allemand, Arabe, etc.</li>
+    <li><strong>Durée de l’examen :</strong> 3 heures</li>
+    <li><strong>Nombre de questions :</strong> 150 QCM (dont 15 non notées)</li>
+    <li><strong>Conditions :</strong> 23 heures de formation en gestion de projet ou CAPM training reconnu, aucun prérequis d’expérience</li>
+    <li><strong>Validité :</strong> 5 ans (re-certification via le passage du test ou de PDU)</li>
+    <li><strong>Coût :</strong> ~225 USD (membre PMI), ~300 USD (non-membre)</li>
+    <li><strong>Contenu principal :</strong>
+      <ul>
+        <li>Cycle de vie d’un projet</li>
+        <li>Rôles et responsabilités dans un projet</li>
+        <li>Structures organisationnelles</li>
+        <li>Introduction aux processus (initiation, planification, exécution, surveillance, clôture)</li>
+      </ul>
+    </li>
+    <li><strong>Format :</strong> Examen en ligne ou en centre Pearson VUE</li>
+    <li><strong>Public cible :</strong> Débutants, jeunes diplômés, professionnels en reconversion</li>
+  </ul>
+  <button onclick="startQuiz('capm')" class="btn btn-primary mt-2">Démarrer le Quiz CAPM</button>
+  <div id="quiz-capm" class="quiz-container mt-4"></div>
+</div>
+
+<div class="tab-pane fade" id="pmp" role="tabpanel" aria-labelledby="pmp-tab">
+  <h3>PMP - Project Management Professional</h3>
+  <p><strong>Définition :</strong> PMP est la certification phare du PMI, reconnue mondialement, qui évalue la compétence d’un individu à gérer les personnes, les processus et les priorités d’un projet professionnel. Elle est basée sur les domaines People, Process et Business Environment.</p>
+  <p><strong>Objectif :</strong> Valider les compétences en gestion de projet à un niveau avancé, démontrer la capacité à diriger et livrer des projets complexes avec succès.</p>
+  <p><strong>Recommandations :</strong> Pour chefs de projet expérimentés, consultants, directeurs de programme, ou toute personne responsable de projets stratégiques dans une organisation.</p>
+  <ul>
+    <li><strong>Organisme :</strong> PMI</li>
+    <li><strong>Langues :</strong> Anglais, Français, Arabe, Chinois, Espagnol, etc.</li>
+    <li><strong>Durée de l’examen :</strong> 230 minutes</li>
+    <li><strong>Nombre de questions :</strong> 180 (dont 5 non notées)</li>
+    <li><strong>Conditions :</strong>
+      <ul>
+        <li>Bac+4 avec 36 mois d'expérience projet + 35h de formation</li>
+        <li>OU Bac+2 avec 60 mois d'expérience projet + 35h de formation</li>
+        <li>OU CAPM valide</li>
+      </ul>
+    </li>
+    <li><strong>Validité :</strong> 3 ans (renouvelable via 60 PDU)</li>
+    <li><strong>Coût :</strong> ~405 USD (membre PMI), ~555 USD (non-membre)</li>
+    <li><strong>Structure :</strong> 3 domaines clés :
+      <ul>
+        <li>People (42%)</li>
+        <li>Process (50%)</li>
+        <li>Business Environment (8%)</li>
+      </ul>
+    </li>
+    <li><strong>Format :</strong> En ligne avec surveillance ou en centre Pearson VUE</li>
+    <li><strong>Public cible :</strong> Chefs de projet, responsables opérationnels, directeurs de projets</li>
+  </ul>
+  <button onclick="startQuiz('pmp')" class="btn btn-primary mt-2">Démarrer le Quiz PMP</button>
+  <div id="quiz-pmp" class="quiz-container mt-4"></div>
+</div>
+
+<div class="tab-pane fade" id="prince2" role="tabpanel" aria-labelledby="prince2-tab">
+  <h3>PRINCE2 - PRojects IN Controlled Environments</h3>
+  <p><strong>Définition :</strong> Méthodologie structurée développée par le gouvernement britannique, basée sur la gestion de projet par processus avec un contrôle rigoureux. PRINCE2 est axée sur des rôles et responsabilités clairement définis, la gestion par exception et l’utilisation de documents standardisés.</p>
+  <p><strong>Objectif :</strong> Fournir une approche adaptable et reproductible pour gérer tout type de projet, quels que soient sa taille et son secteur.</p>
+  <p><strong>Recommandations :</strong> Très utilisée dans le secteur public et dans les grandes organisations. Exigée souvent dans les appels d’offres en Europe et dans les projets réglementés.</p>
+  <ul>
+    <li><strong>Organisme :</strong> AXELOS / PeopleCert</li>
+    <li><strong>Langues :</strong> Anglais, Français, Allemand, Espagnol, etc.</li>
+    <li><strong>Niveaux de certification :</strong>
+      <ul>
+        <li><strong>Foundation :</strong> Connaissances de base, compréhension des principes et terminologie PRINCE2.</li>
+        <li><strong>Practitioner :</strong> Application pratique dans des scénarios réels, compréhension approfondie des concepts et capacités d’adaptation.</li>
+      </ul>
+    </li>
+    <li><strong>Conditions d’examen :</strong>
+      <ul>
+        <li><em>Foundation :</em> 60 questions à choix multiples, 60 minutes, note de passage 55%, aucun prérequis.</li>
+        <li><em>Practitioner :</em> 68 questions basées sur un scénario, 150 minutes, note de passage 55%, prérequis : Foundation ou équivalent (PMP/CAPM reconnu).</li>
+      </ul>
+    </li>
+    <li><strong>Validité :</strong> 3 ans pour Practitioner (renouvellement possible par réexamen ou formation continue)</li>
+    <li><strong>Coût approximatif :</strong> 250 € pour Foundation, 450 € pour Practitioner</li>
+    <li><strong>Structure de PRINCE2 :</strong>
+      <ul>
+        <li>7 Principes clés (justification continue, apprentissage des expériences, rôles et responsabilités définis, gestion par phases, gestion par exception, focalisation produit, adaptation au projet)</li>
+        <li>7 Thèmes (cas d’affaire, organisation, qualité, plans, risques, changement, progression)</li>
+        <li>7 Processus (démarrage, initiation, direction, contrôle, gestion des limites, livraison, clôture)</li>
+      </ul>
+    </li>
+    <li><strong>Public cible :</strong> Chefs de projet, directeurs de programme, PMO, responsables de projet dans les secteurs public et privé.</li>
+  </ul>
+</div>
+
+
+
+
+<div class="tab-pane fade" id="scrum" role="tabpanel" aria-labelledby="scrum-tab">
+  <h3>SCRUM - Framework Agile Scrum Master / Product Owner</h3>
+  <p><strong>Définition :</strong> Scrum est un cadre de travail Agile itératif et incrémental permettant de gérer efficacement le développement de produits complexes. Il met l'accent sur la collaboration, la flexibilité, l'adaptabilité et la livraison continue de valeur.</p>
+  <p><strong>Objectif :</strong> Favoriser l'efficacité des équipes et la réactivité face aux changements en s’appuyant sur des cycles courts appelés sprints.</p>
+  <p><strong>Recommandations :</strong> Adapté aux équipes de développement logiciel, startups, projets numériques, et entreprises en transformation Agile.</p>
+  <ul>
+    <li><strong>Organismes :</strong> Scrum.org, Scrum Alliance, SAFe, PMI-ACP</li>
+    <li><strong>Langues :</strong> Anglais (nombreuses certifications disponibles en français par certains organismes)</li>
+    <li><strong>Certifications populaires : :</strong>
+      <ul>
+        <li><strong>PSM I (Professional Scrum Master I)</strong> – Scrum.org, examen en ligne, 80 questions, 60 minutes, note requise 85%</li>
+        <li><strong>CSM (Certified Scrum Master)</strong> – Scrum Alliance, nécessite formation, examen en ligne, validité 2 ans</li>
+        <li><strong>PSPO (Professional Scrum Product Owner)</strong> – Scrum.org</li>
+        <li><strong>PMI-ACP (Agile Certified Practitioner)</strong> – PMI, qui couvre Scrum et d'autres méthodes Agile</li>
+      </ul>
+    </li>
+    <li><strong>Conditions d’examen :</strong> Pas de prérequis formel pour PSM I, lecture du Scrum Guide recommandée. Pour PMI-ACP, expérience Agile et formation requises.</li>
+    <li><strong>Durée de l’examen :</strong> 60 minutes pour PSM I</li>
+    <li><strong>Coût approximatif :</strong> ~150 $ (PSM I), ~450 $ (CSM avec formation)</li>
+    <li><strong>Validité :</strong> Illimitée (PSM I), 2 ans (CSM, renouvelable par formation continue)</li>
+    <li><strong>Structure de Scrum :</strong>
+      <ul>
+        <li>Rôles : Scrum Master, Product Owner, équipe de développement</li>
+        <li>Événements : Sprint, Daily Scrum, Sprint Review, Sprint Retrospective</li>
+        <li>Artefacts : Product Backlog, Sprint Backlog, Increment</li>
+        <li>Valeurs : Focus, Courage, Ouverture, Respect, Engagement</li>
+      </ul>
+    </li>
+    <li><strong>Public cible :</strong> Scrum Masters, Product Owners, développeurs, coachs Agile, chefs de projet Agile.</li>
+  </ul>
+</div>
+
+
+<div class="tab-pane fade" id="itil" role="tabpanel" aria-labelledby="itil-tab">
+  <h3>ITIL - Information Technology Infrastructure Library</h3>
+  <p><strong>Définition :</strong> ITIL est un cadre de gestion des services informatiques (ITSM) basé sur les bonnes pratiques pour aligner les services IT avec les besoins métier.</p>
+  <p><strong>Objectif :</strong> Améliorer l'efficacité, la qualité et la valeur des services IT fournis à l'entreprise.</p>
+  <p><strong>Recommandations :</strong> Recommandé pour les responsables de support, gestionnaires de services IT, consultants ITSM, auditeurs et chefs de projets infrastructure.</p>
+  <ul>
+    <li><strong>Organisme :</strong> Axelos / PeopleCert</li>
+    <li><strong>Langues :</strong> Français, Anglais, Espagnol, Allemand, Arabe, etc.</li>
+    <li><strong>Certifications :</strong>
+      <ul>
+        <li>ITIL Foundation</li>
+        <li>ITIL 4 Managing Professional (MP)</li>
+        <li>ITIL Strategic Leader (SL)</li>
+      </ul>
+    </li>
+    <li><strong>Examen Foundation :</strong>
+      <ul>
+        <li>40 QCM – 60 minutes</li>
+        <li>Note minimale : 65% (26/40)</li>
+        <li>Pas de prérequis</li>
+      </ul>
+    </li>
+    <li><strong>Coût :</strong> ~250 € (Foundation)</li>
+    <li><strong>Validité :</strong> Illimitée (Foundation)</li>
+    <li><strong>Structure ITIL 4 :</strong>
+      <ul>
+        <li>4 dimensions du management des services</li>
+        <li>7 principes directeurs</li>
+        <li>34 pratiques de gestion</li>
+        <li>Chaîne de valeur des services (SVC)</li>
+      </ul>
+    </li>
+    <li><strong>Public cible :</strong> Gestionnaires IT, techniciens support, responsables qualité IT</li>
+  </ul>
+</div>
+
+
+<div class="tab-pane fade" id="cobit" role="tabpanel" aria-labelledby="cobit-tab">
+  <h3>COBIT - Control Objectives for Information and Related Technologies</h3>
+  <p><strong>Définition :</strong> COBIT est un cadre de gouvernance des systèmes d'information orienté pilotage de la performance, du risque, de la conformité et de la stratégie IT.</p>
+  <p><strong>Objectif :</strong> Aider les entreprises à aligner l’IT sur les objectifs business et à mettre en œuvre des contrôles adaptés.</p>
+  <p><strong>Recommandations :</strong> Fortement conseillé pour les auditeurs IT, responsables risques, DSI, et experts en gouvernance IT.</p>
+  <ul>
+    <li><strong>Organisme :</strong> ISACA</li>
+    <li><strong>Langues :</strong> Anglais (traductions disponibles via partenaires)</li>
+    <li><strong>Certifications :</strong>
+      <ul>
+        <li>COBIT Foundation</li>
+        <li>COBIT Design and Implementation</li>
+        <li>COBIT Implementation Certificate</li>
+      </ul>
+    </li>
+    <li><strong>Examen Foundation :</strong>
+      <ul>
+        <li>75 QCM – 120 minutes</li>
+        <li>Note minimale : 65%</li>
+        <li>Pas de prérequis</li>
+      </ul>
+    </li>
+    <li><strong>Coût :</strong> ~275 $ (Foundation)</li>
+    <li><strong>Validité :</strong> Illimitée</li>
+    <li><strong>Structure COBIT 2019 :</strong>
+      <ul>
+        <li>40 objectifs de gouvernance et de management</li>
+        <li>Modèle en cascade d’objectifs</li>
+        <li>Processus de gouvernance, gestion des risques et performances</li>
+      </ul>
+    </li>
+    <li><strong>Public cible :</strong> Auditeurs IT, DSI, RSSI, responsables conformité IT, consultants gouvernance</li>
+  </ul>
+</div>
+
+
+<div class="tab-pane fade" id="togaf" role="tabpanel" aria-labelledby="togaf-tab">
+  <h3>TOGAF - The Open Group Architecture Framework</h3>
+  <p><strong>Définition :</strong> TOGAF est un cadre méthodologique pour la conception, le développement et la gouvernance d’architectures d’entreprise.</p>
+  <p><strong>Objectif :</strong> Aider à structurer l’architecture globale d’un SI en alignement avec les objectifs métiers.</p>
+  <p><strong>Recommandations :</strong> Utile pour les architectes d’entreprise, urbanistes SI, DSI, responsables de transformation numérique.</p>
+  <ul>
+    <li><strong>Organisme :</strong> The Open Group</li>
+    <li><strong>Langues :</strong> Anglais (traduction partielle FR chez certains partenaires)</li>
+    <li><strong>Certifications :</strong>
+      <ul>
+        <li>TOGAF 9 Foundation (Level 1)</li>
+        <li>TOGAF 9 Certified (Level 2)</li>
+        <li>TOGAF Combined (1+2)</li>
+      </ul>
+    </li>
+    <li><strong>Examens :</strong>
+      <ul>
+        <li>Level 1 : 40 QCM – 60 minutes – Note min : 55%</li>
+        <li>Level 2 : QCM scénario – 90 minutes – Note min : 60%</li>
+        <li>Combined : 150 minutes</li>
+      </ul>
+    </li>
+    <li><strong>Coût :</strong> ~360 $ par niveau ou ~550 $ combiné</li>
+    <li><strong>Validité :</strong> Illimitée</li>
+    <li><strong>Structure TOGAF ADM :</strong>
+      <ul>
+        <li>Architecture Development Method (ADM)</li>
+        <li>8 phases ADM : Préliminaire, Vision, Métier, Systèmes, Données, Technologie, Implémentation, Gestion</li>
+        <li>Référentiels : ArchiMate, Content Framework, Enterprise Continuum</li>
+      </ul>
+    </li>
+    <li><strong>Public cible :</strong> Architectes d'entreprise, urbanistes SI, directeurs de programme</li>
+  </ul>
+</div>
+
+      <div class="tab-pane fade" id="quiz" role="tabpanel" aria-labelledby="quiz-tab">
+		  <div class="row">
+			<div class="col-lg-4 col-md-5">
+			  <div class="card shadow-sm mb-4">
+				<div class="card-header bg-white">
+				  <h3 class="card-title mb-0"><i class="fas fa-trophy me-2 text-warning"></i>Choisissez un Quiz</h3>
+				</div>
+				<div class="card-body p-0">
+				  <div class="list-group list-group-flush">
+				  
+					 <button class="list-group-item list-group-item-action d-flex align-items-center py-3" onclick="startQuiz('capm')">
+						<div class="me-3">
+						  <i class="fas fa-certificate fa-2x text-primary"></i>
+						</div>
+						<div>
+						  <h5 class="mb-1">CAPM</h5>
+						  <p class="small text-muted mb-0">Certification d'entrée de gamme en gestion de projet</p>
+						  <span class="badge bg-primary mt-1">${quizzes.capm.length} questions</span>
+						</div>
+					  </button>
+					<button class="list-group-item list-group-item-action d-flex align-items-center py-3" onclick="startQuiz('pmp')">
+					  <div class="me-3">
+						<i class="fas fa-award fa-2x text-danger"></i>
+					  </div>
+					  <div>
+						<h5 class="mb-1">PMP</h5>
+						<p class="small text-muted mb-0">Certification avancée pour chefs de projet</p>
+						<span class="badge bg-danger mt-1">${quizzes.pmp.length} questions</span>
+					  </div>
+					</button>
+					<button class="list-group-item list-group-item-action d-flex align-items-center py-3" onclick="startQuiz('prince2')">
+					  <div class="me-3">
+						<i class="fas fa-chess fa-2x text-purple"></i>
+					  </div>
+					  <div>
+						<h5 class="mb-1">PRINCE2</h5>
+						<p class="small text-muted mb-0">Méthodologie structurée de gestion de projet</p>
+						<span class="badge bg-purple mt-1">${quizzes.prince2.length} questions</span>
+					  </div>
+					</button>
+					<button class="list-group-item list-group-item-action d-flex align-items-center py-3" onclick="startQuiz('scrum')">
+					  <div class="me-3">
+						<i class="fas fa-arrows-rotate fa-2x text-success"></i>
+					  </div>
+					  <div>
+						<h5 class="mb-1">Scrum</h5>
+						<p class="small text-muted mb-0">Framework Agile pour développement produit</p>
+						<span class="badge bg-success mt-1">${quizzes.scrum.length} questions</span>
+					  </div>
+					</button>
+				  </div>
+				</div>
+				<div class="card-footer bg-white">
+				  <div class="d-flex justify-content-between align-items-center">
+					<small class="text-muted"><i class="fas fa-info-circle me-1"></i> Sélectionnez une certification</small>
+					<small class="text-primary">${Object.keys(quizzes).reduce((acc, key) => acc + quizzes[key].length, 0)} questions disponibles</small>
+				  </div>
+				</div>
+			  </div>
+
+			  <div class="card shadow-sm">
+				<div class="card-header bg-white">
+				  <h5 class="card-title mb-0"><i class="fas fa-chart-line me-2 text-info"></i>Vos Statistiques</h5>
+				</div>
+				<div class="card-body">
+				  <div class="text-center py-3">
+					<i class="fas fa-medal fa-3x text-warning mb-3"></i>
+					<h4>Progression</h4>
+					<div class="progress mt-3" style="height: 10px;">
+					  <div class="progress-bar bg-success" style="width: 25%"></div>
+					  <div class="progress-bar bg-warning" style="width: 15%"></div>
+					  <div class="progress-bar bg-danger" style="width: 10%"></div>
+					</div>
+					<div class="mt-3 small text-muted">
+					  <span class="d-inline-block me-3"><span class="badge bg-success me-1"></span> Réussis: 25%</span>
+					  <span class="d-inline-block me-3"><span class="badge bg-warning me-1"></span> En cours: 15%</span>
+					  <span class="d-inline-block"><span class="badge bg-danger me-1"></span> À améliorer: 10%</span>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+			<div class="col-lg-8 col-md-7">
+			  <div id="quiz-container" class="quiz-container">
+				<div class="card shadow">
+				  <div class="card-header bg-white">
+					<h3 class="card-title mb-0"><i class="fas fa-lightbulb me-2 text-primary"></i>Guide du Quiz</h3>
+				  </div>
+				  <div class="card-body">
+					<div class="alert alert-info">
+					  <h5><i class="fas fa-info-circle me-2"></i>Comment utiliser les quiz ?</h5>
+					  <ul class="mb-0">
+						<li>Sélectionnez une certification dans la colonne de gauche</li>
+						<li>Chaque quiz contient des questions aléatoires</li>
+						<li>Temps limité: environ 30 secondes par question</li>
+						<li>Obtenez des explications détaillées après chaque réponse</li>
+					  </ul>
+					</div>
+
+					<div class="row mt-4">
+					  <div class="col-md-6 mb-3">
+						<div class="card h-100 border-start border-3 border-primary">
+						  <div class="card-body">
+							<h5><i class="fas fa-tachometer-alt text-primary me-2"></i>Mode Pratique</h5>
+							<p class="small text-muted">Entraînez-vous sans limite de temps et avec des explications détaillées.</p>
+							<button class="btn btn-sm btn-outline-primary">Activer</button>
+						  </div>
+						</div>
+					  </div>
+					  <div class="col-md-6 mb-3">
+						<div class="card h-100 border-start border-3 border-danger">
+						  <div class="card-body">
+							<h5><i class="fas fa-stopwatch text-danger me-2"></i>Mode Examen</h5>
+							<p class="small text-muted">Simulez les conditions réelles d'examen avec chronomètre.</p>
+							<button class="btn btn-sm btn-outline-danger">Activer</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+
+					<div class="mt-4">
+					  <h5><i class="fas fa-medal text-warning me-2"></i>Classement</h5>
+					  <div class="table-responsive">
+						<table class="table table-sm">
+						  <thead>
+							<tr>
+							  <th>#</th>
+							  <th>Quiz</th>
+							  <th>Score</th>
+							  <th>Temps</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<tr>
+							  <td>1</td>
+							  <td>CAPM</td>
+							  <td>85%</td>
+							  <td>12:30</td>
+							</tr>
+							<tr>
+							  <td>2</td>
+							  <td>PMP</td>
+							  <td>72%</td>
+							  <td>18:45</td>
+							</tr>
+						  </tbody>
+						</table>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+  <div class="tab-pane fade" id="learn" role="tabpanel" aria-labelledby="learn-tab">
+  <div class="row">
+    <div class="col-lg-3 col-md-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+          <h5 class="card-title mb-0"><i class="fas fa-book me-2 text-primary"></i>Modules d'apprentissage</h5>
+        </div>
+        <div class="list-group list-group-flush rounded-bottom">
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active" 
+             onclick="showLearnContent('pm-concepts')">
+            <span>
+              <i class="fas fa-project-diagram me-2"></i>Concepts de base
+            </span>
+            <span class="badge bg-white text-primary rounded-pill">5 leçons</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
+             onclick="showLearnContent('agile-method')">
+            <span>
+              <i class="fas fa-arrows-rotate me-2"></i>Méthodes Agile
+            </span>
+            <span class="badge bg-light text-dark rounded-pill">8 leçons</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
+             onclick="showLearnContent('risk-management')">
+            <span>
+              <i class="fas fa-shield-alt me-2"></i>Gestion des risques
+            </span>
+            <span class="badge bg-light text-dark rounded-pill">6 leçons</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
+             onclick="showLearnContent('stakeholder-management')">
+            <span>
+              <i class="fas fa-users me-2"></i>Parties prenantes
+            </span>
+            <span class="badge bg-light text-dark rounded-pill">4 leçons</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
+             onclick="showLearnContent('pm-tools')">
+            <span>
+              <i class="fas fa-tools me-2"></i>Outils du chef de projet
+            </span>
+            <span class="badge bg-light text-dark rounded-pill">7 leçons</span>
+          </a>
+        </div>
+        <div class="card-footer bg-white">
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <small class="text-muted">25% du programme complété</small>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-white">
+          <h5 class="card-title mb-0"><i class="fas fa-filter me-2 text-info"></i>Filtrer par</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Certification</label>
+            <select class="form-select form-select-sm">
+              <option>Toutes</option>
+              <option>CAPM</option>
+              <option>PMP</option>
+              <option>PRINCE2</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Difficulté</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="difficulty1" checked>
+              <label class="form-check-label" for="difficulty1">Débutant</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="difficulty2" checked>
+              <label class="form-check-label" for="difficulty2">Intermédiaire</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="difficulty3">
+              <label class="form-check-label" for="difficulty3">Avancé</label>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-primary w-100">Appliquer</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9 col-md-8">
+      <div id="learn-content" class="learn-content">
+        <div class="card shadow-sm">
+          <div class="card-header bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h4 class="card-title mb-0"><i class="fas fa-graduation-cap text-primary me-2"></i>Bienvenue en mode Learn</h4>
+              </div>
+              <div>
+                <span class="badge bg-primary">CAPM</span>
+                <span class="badge bg-success ms-1">PMP</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="text-center py-4">
+              <img src="https://via.placeholder.com/300x200?text=Gestion+de+Projet" alt="Gestion de projet" class="img-fluid rounded mb-4">
+              <h3>Apprenez à votre rythme</h3>
+              <p class="lead">Sélectionnez un module dans le menu de gauche pour commencer votre apprentissage.</p>
+              <div class="row mt-4">
+                <div class="col-md-4 mb-3">
+                  <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <i class="fas fa-video fa-3x text-primary mb-3"></i>
+                      <h5>Cours vidéo</h5>
+                      <p class="small text-muted">+50 heures de contenu</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <i class="fas fa-file-alt fa-3x text-success mb-3"></i>
+                      <h5>Fiches pratiques</h5>
+                      <p class="small text-muted">+120 ressources</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <i class="fas fa-chart-pie fa-3x text-warning mb-3"></i>
+                      <h5>Suivi de progression</h5>
+                      <p class="small text-muted">Analytiques détaillés</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h5><i class="fas fa-fire text-danger me-2"></i>Modules populaires</h5>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="card h-100 hover-shadow" onclick="showLearnContent('agile-method')">
+                    <div class="card-body">
+                      <div class="d-flex">
+                        <div class="flex-shrink-0">
+                          <i class="fas fa-arrows-rotate fa-2x text-success me-3"></i>
+                        </div>
+                        <div>
+                          <h6 class="mb-1">Méthodes Agile</h6>
+                          <p class="small text-muted mb-2">Maîtrisez Scrum, Kanban et XP</p>
+                          <div class="progress" style="height: 5px;">
+                            <div class="progress-bar bg-success" style="width: 65%"></div>
+                          </div>
+                          <small class="text-muted">65% complété</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="card h-100 hover-shadow" onclick="showLearnContent('risk-management')">
+                    <div class="card-body">
+                      <div class="d-flex">
+                        <div class="flex-shrink-0">
+                          <i class="fas fa-shield-alt fa-2x text-danger me-3"></i>
+                        </div>
+                        <div>
+                          <h6 class="mb-1">Gestion des risques</h6>
+                          <p class="small text-muted mb-2">Identifiez et mitigez les risques</p>
+                          <div class="progress" style="height: 5px;">
+                            <div class="progress-bar bg-danger" style="width: 40%"></div>
+                          </div>
+                          <small class="text-muted">40% complété</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+	  
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="quiz.js"></script>
+  <script src="learn.js"></script>
+</body>
+</html>
