@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portail PMP Certification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            border: none;
+            padding: 12px 20px;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--secondary-color);
+            background-color: transparent;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        
+        .nav-tabs .nav-link:hover {
+            border-color: transparent;
+            color: var(--secondary-color);
+        }
+        
+        .badge-pmp {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .concept-card {
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .quiz-question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: 8px;
+        }
+        
+        .quiz-option {
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .quiz-option:hover {
+            background-color: #d6eaf8;
+        }
+        
+        .quiz-option.selected {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .quiz-option.correct {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .quiz-option.incorrect {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .explanation {
+            display: none;
+            padding: 15px;
+            margin-top: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        .wow-effect {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .progress-bar-pmp {
+            background-color: var(--secondary-color);
+        }
+        
+        .cheatsheet-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-project-diagram me-2"></i>PMP Certification
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#intro"><i class="fas fa-home me-1"></i> Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cheatsheet"><i class="fas fa-book me-1"></i> Ressources</a>
+                    </li>
+                  
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="dashboard-header">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3 wow-effect">Portail PMP Certification</h1>
+            <p class="lead">Maîtrisez les concepts clés du Project Management et préparez-vous efficacement à la certification PMP</p>
+            <div class="d-flex justify-content-center mt-4">
+                <div class="progress w-75" style="height: 10px;">
+                    <div class="progress-bar progress-bar-pmp progress-bar-striped progress-bar-animated" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <p class="mt-2">Votre progression: 30%</p>
+        </div>
+    </header>
+
+    <div class="container mb-5">
+        <ul class="nav nav-tabs" id="pmpTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="intro-tab" data-bs-toggle="tab" data-bs-target="#intro" type="button" role="tab">Introduction</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="domains-tab" data-bs-toggle="tab" data-bs-target="#domains" type="button" role="tab">Domaines PMP</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="processes-tab" data-bs-toggle="tab" data-bs-target="#processes" type="button" role="tab">Processus</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="knowledge-tab" data-bs-toggle="tab" data-bs-target="#knowledge" type="button" role="tab">Bases de Connaissances</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="quiz-learn-tab" data-bs-toggle="tab" data-bs-target="#quiz-learn" type="button" role="tab">Quiz Learn</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="quiz-simple-tab" data-bs-toggle="tab" data-bs-target="#quiz-simple" type="button" role="tab">Quiz Simple</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="cheatsheet-tab" data-bs-toggle="tab" data-bs-target="#cheatsheet" type="button" role="tab">Cheatsheet Examen</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pmpTabsContent">
+            <div class="tab-pane fade show active" id="intro" role="tabpanel">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h2 class="mb-4"><i class="fas fa-info-circle text-primary me-2"></i>Introduction à la certification PMP</h2>
+                        <p class="lead">La certification PMP (Project Management Professional) est la certification la plus reconnue mondialement en gestion de projet, délivrée par le Project Management Institute (PMI).</p>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-bullseye me-2"></i>Objectifs de la certification PMP
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>Valider vos compétences en gestion de projet selon les standards internationaux</li>
+                                    <li>Démontrer votre maîtrise des méthodologies de gestion de projet</li>
+                                    <li>Améliorer vos perspectives de carrière et votre rémunération</li>
+                                    <li>Rejoindre un réseau mondial de professionnels certifiés</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-certificate me-2"></i>Examen PMP
+                            </div>
+                            <div class="card-body">
+                                <p>L'examen PMP évalue votre compréhension des principes clés de gestion de projet selon le PMBOK Guide.</p>
+                                <div class="alert alert-info">
+                                    <h5><i class="fas fa-lightbulb me-2"></i>Structure de l'examen:</h5>
+                                    <ul>
+                                        <li>180 questions (dont 175 notées)</li>
+                                        <li>Durée: 230 minutes</li>
+                                        <li>3 domaines principaux</li>
+                                        <li>Mix de questions à choix multiples, glisser-déposer, etc.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="card mb-4 wow-effect">
+                            <div class="card-header bg-success text-white">
+                                <i class="fas fa-star me-2"></i>Pourquoi devenir PMP?
+                            </div>
+                            <div class="card-body">
+                                <p>La certification PMP est un atout majeur pour les professionnels du management de projet:</p>
+                                <ul>
+                                    <li>Reconnaissance mondiale</li>
+                                    <li>Augmentation du salaire moyen</li>
+                                    <li>Accès à un réseau professionnel</li>
+                                    <li>Meilleures opportunités de carrière</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-history me-2"></i>Évolution du PMP
+                            </div>
+                            <div class="card-body">
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <h6>1984</h6>
+                                        <p>Première certification PMP</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <h6>2000</h6>
+                                        <p>Adoption du PMBOK Guide</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <h6>2021</h6>
+                                        <p>Nouveau format d'examen</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-chart-pie me-2"></i>Avantages pour les organisations
+                            </div>
+                            <div class="card-body">
+                                <ol>
+                                    <li>Meilleure réussite des projets</li>
+                                    <li>Standardisation des pratiques</li>
+                                    <li>Amélioration de la productivité</li>
+                                    <li>Réduction des risques</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="domains" role="tabpanel">
+                <h2 class="mb-4"><i class="fas fa-sitemap text-primary me-2"></i>Les 3 Domaines de Performance du PMP</h2>
+                <p class="lead">L'examen PMP est structuré autour de trois domaines principaux qui couvrent l'ensemble du cycle de vie d'un projet.</p>
+
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">PEOPLE (42%)</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Compétences liées à la gestion des parties prenantes et des équipes projet.</p>
+                                <ul>
+                                    <li>Leadership d'équipe</li>
+                                    <li>Gestion des conflits</li>
+                                    <li>Communication efficace</li>
+                                    <li>Engagement des parties prenantes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">PROCESS (50%)</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Aspects techniques de la gestion de projet selon les processus du PMBOK.</p>
+                                <ul>
+                                    <li>Planification du projet</li>
+                                    <li>Gestion des risques</li>
+                                    <li>Contrôle des coûts</li>
+                                    <li>Suivi des délais</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">BUSINESS ENVIRONMENT (8%)</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Alignement du projet avec la stratégie globale de l'organisation.</p>
+                                <ul>
+                                    <li>Analyse des besoins business</li>
+                                    <li>Gestion du changement organisationnel</li>
+                                    <li>Compliance et réglementation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar me-2"></i>Répartition des questions par domaine
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <canvas id="domainsChart" height="200"></canvas>
+                            </div>
+                            <div class="col-md-4">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        People
+                                        <span class="badge bg-primary rounded-pill">42%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Process
+                                        <span class="badge bg-primary rounded-pill">50%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Business Environment
+                                        <span class="badge bg-primary rounded-pill">8%</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="processes" role="tabpanel">
+                <h2 class="mb-4"><i class="fas fa-project-diagram text-primary me-2"></i>Les 49 Processus de Gestion de Projet</h2>
+                <p class="lead">Le PMBOK Guide définit 49 processus répartis en 5 groupes de processus et 10 domaines de connaissances.</p>
+                
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-2"></i>Tableau des processus par groupe et domaine
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Domaines de Connaissances</th>
+                                        <th>Initiating</th>
+                                        <th>Planning</th>
+                                        <th>Executing</th>
+                                        <th>Monitoring & Controlling</th>
+                                        <th>Closing</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Integration</td>
+                                        <td>Develop Project Charter</td>
+                                        <td>Develop Project Management Plan</td>
+                                        <td>Direct and Manage Project Work</td>
+                                        <td>Monitor and Control Project Work, Perform Integrated Change Control</td>
+                                        <td>Close Project or Phase</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Scope</td>
+                                        <td>-</td>
+                                        <td>Plan Scope Management, Collect Requirements, Define Scope, Create WBS</td>
+                                        <td>-</td>
+                                        <td>Validate Scope, Control Scope</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Schedule</td>
+                                        <td>-</td>
+                                        <td>Plan Schedule Management, Define Activities, Sequence Activities, Estimate Activity Durations, Develop Schedule</td>
+                                        <td>-</td>
+                                        <td>Control Schedule</td>
+                                        <td>-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-list-ol me-2"></i>Groupes de Processus
+                            </div>
+                            <div class="card-body">
+                                <ol>
+                                    <li><strong>Initiating:</strong> Définir le nouveau projet ou phase</li>
+                                    <li><strong>Planning:</strong> Établir le périmètre, affiner les objectifs</li>
+                                    <li><strong>Executing:</strong> Mettre en œuvre le plan</li>
+                                    <li><strong>Monitoring & Controlling:</strong> Suivre, examiner et réguler</li>
+                                    <li><strong>Closing:</strong> Finaliser toutes les activités</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-book me-2"></i>Domaines de Connaissances
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>Integration</li>
+                                    <li>Scope</li>
+                                    <li>Schedule</li>
+                                    <li>Cost</li>
+                                    <li>Quality</li>
+                                    <li>Resources</li>
+                                    <li>Communications</li>
+                                    <li>Risk</li>
+                                    <li>Procurement</li>
+                                    <li>Stakeholders</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="knowledge" role="tabpanel">
+                <h2 class="mb-4"><i class="fas fa-lightbulb text-primary me-2"></i>Bases de Connaissances PMP</h2>
+                <p class="lead">Les concepts essentiels à maîtriser pour réussir l'examen PMP.</p>
+                
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Triangle des Contraintes</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Également appelé "Triple Contrainte", il représente les trois principales variables d'un projet :</p>
+                                <ul>
+                                    <li><strong>Scope:</strong> Périmètre du projet</li>
+                                    <li><strong>Time:</strong> Délais et échéances</li>
+                                    <li><strong>Cost:</strong> Budget et ressources</li>
+                                </ul>
+                                <p>Toute modification d'une contrainte affecte les deux autres.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Cycle de Vie du Projet</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Les phases typiques d'un projet :</p>
+                                <ol>
+                                    <li>Démarrage</li>
+                                    <li>Planification</li>
+                                    <li>Exécution</li>
+                                    <li>Surveillance et contrôle</li>
+                                    <li>Clôture</li>
+                                </ol>
+                                <p>Chaque phase a des objectifs et livrables spécifiques.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Parties Prenantes</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Individus ou organisations impactés par le projet :</p>
+                                <ul>
+                                    <li>Client</li>
+                                    <li>Équipe projet</li>
+                                    <li>Sponsor</li>
+                                    <li>Fournisseurs</li>
+                                </ul>
+                                <p>L'identification et la gestion des parties prenantes sont cruciales.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Gestion des Risques</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Processus pour identifier, analyser et répondre aux risques :</p>
+                                <ul>
+                                    <li>Identification des risques</li>
+                                    <li>Analyse qualitative/quantitative</li>
+                                    <li>Plan de réponse</li>
+                                    <li>Surveillance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">WBS (Work Breakdown Structure)</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Décomposition hiérarchique du travail :</p>
+                                <ul>
+                                    <li>Divise le projet en éléments gérables</li>
+                                    <li>Base pour l'estimation et le planning</li>
+                                    <li>Niveaux : Projet > Lots de travail > Packages de travail > Activités</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Méthodes Agile</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Approches itératives et adaptatives :</p>
+                                <ul>
+                                    <li>Scrum</li>
+                                    <li>Kanban</li>
+                                    <li>Lean</li>
+                                    <li>Extreme Programming</li>
+                                </ul>
+                                <p>De plus en plus présentes dans l'examen PMP.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="quiz-learn" role="tabpanel">
+                <h2 class="mb-4"><i class="fas fa-question-circle text-primary me-2"></i>Quiz Learn - Pratique pour l'Examen PMP</h2>
+                <p class="lead">Mettez vos connaissances à l'épreuve avec des quiz interactifs et des explications détaillées pour chaque réponse.</p>
+
+                <div id="quizContainer">
+                    <p class="text-muted text-end mb-2">Question <span id="currentQuestionNumber">1</span> / <span id="totalQuestionsCount">10</span></p>
+
+                    <div id="questionDisplay" class="quiz-question">
+                        <h4>Quel est le document qui autorise formellement le démarrage d'un projet?</h4>
+                        <div class="quiz-option" data-correct="true">Project Charter</div>
+                        <div class="quiz-option">Business Case</div>
+                        <div class="quiz-option">Project Management Plan</div>
+                        <div class="quiz-option">Scope Statement</div>
+                    </div>
+
+                    <div id="explanationDisplay" class="explanation mt-3 card p-3" style="display: none;">
+                        <h5><i class="fas fa-lightbulb text-warning me-2"></i>Explication</h5>
+                        <p>Le <strong>Project Charter</strong> est le document qui autorise formellement un projet. Il est créé pendant le processus "Develop Project Charter" dans le groupe de processus Initiating.</p>
+                        <p>Le Business Case justifie le projet mais ne l'autorise pas. Le Project Management Plan est développé plus tard, pendant la planification. Le Scope Statement fait partie de la documentation du périmètre.</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-secondary" id="restartQuizBtn" style="display:none;"><i class="fas fa-redo me-2"></i>Recommencer le Quiz</button>
+                        <button class="btn btn-primary ms-auto" id="nextQuestionBtn"><i class="fas fa-arrow-right me-2"></i>Question Suivante</button>
+                    </div>
+                </div>
+
+                <div id="quizResults" style="display:none;" class="mt-5 card p-4 border-primary">
+                    <h3 class="card-title text-center text-primary mb-4">Vos Résultats du Quiz</h3>
+                    <p class="lead text-center mb-4">Vous avez répondu correctement à <span id="scoreDisplay" class="fw-bold text-success">0</span> questions sur <span id="totalQuestionsFinalDisplay" class="fw-bold">10</span>.</p>
+                    <div class="progress mb-4" style="height: 25px;">
+                        <div class="progress-bar progress-bar-pmp" role="progressbar" id="progressBarScore" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div id="recommendations" class="alert mt-4">
+                        <h5><i class="fas fa-trophy me-2"></i>Recommandations</h5>
+                        <p>Consultez les sections sur les processus d'initiation et les documents de projet pour améliorer vos connaissances.</p>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-success btn-lg" id="retakeQuizBtn"><i class="fas fa-redo me-2"></i>Refaire le Quiz</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="quiz-simple" role="tabpanel">
+                <h2 class="mb-4"><i class="fas fa-lightbulb text-primary me-2"></i>Quiz Simple - Maîtrise des Fondamentaux</h2>
+                <p class="lead">Testez rapidement vos connaissances sur les concepts fondamentaux du PMP. Visez 80% pour une bonne base !</p>
+
+                <div id="quizSimpleContainer">
+                    <p class="text-muted text-end mb-2">Question <span id="currentQuestionSimpleNumber">1</span> / <span id="totalQuestionsSimpleCount">10</span></p>
+
+                    <div id="questionSimpleDisplay" class="quiz-question">
+                        <h4>Quel groupe de processus comprend le "Develop Schedule"?</h4>
+                        <div class="quiz-option">Initiating</div>
+                        <div class="quiz-option" data-correct="true">Planning</div>
+                        <div class="quiz-option">Executing</div>
+                        <div class="quiz-option">Monitoring & Controlling</div>
+                    </div>
+
+                    <div id="explanationSimpleDisplay" class="explanation mt-3 card p-3" style="display: none;">
+                        <h5><i class="fas fa-lightbulb text-warning me-2"></i>Explication</h5>
+                        <p>"Develop Schedule" fait partie du groupe de processus <strong>Planning</strong> et du domaine de connaissances Schedule Management.</p>
+                        <p>C'est l'un des processus clés pour établir le calendrier du projet après avoir défini et séquencé les activités et estimé leurs durées.</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-secondary" id="restartSimpleQuizBtn" style="display:none;"><i class="fas fa-redo me-2"></i>Recommencer le Quiz</button>
+                        <button class="btn btn-primary ms-auto" id="nextSimpleQuestionBtn"><i class="fas fa-arrow-right me-2"></i>Question Suivante</button>
+                    </div>
+                </div>
+
+                <div id="quizSimpleResults" style="display:none;" class="mt-5 card p-4 border-info">
+                    <h3 class="card-title text-center text-primary mb-4">Vos Résultats du Quiz Simple</h3>
+                    <p class="lead text-center mb-4">Vous avez répondu correctement à <span id="scoreSimpleDisplay" class="fw-bold text-success">0</span> questions sur <span id="totalQuestionsSimpleFinalDisplay" class="fw-bold">10</span>.</p>
+                    <div class="progress mb-4" style="height: 25px;">
+                        <div class="progress-bar progress-bar-pmp" role="progressbar" id="progressBarSimpleScore" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div id="recommendationsSimple" class="alert mt-4">
+                        <h5><i class="fas fa-trophy me-2"></i>Recommandations</h5>
+                        <p>Revoyez les groupes de processus et leur relation avec les domaines de connaissances.</p>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-success btn-lg" id="retakeSimpleQuizBtn"><i class="fas fa-redo me-2"></i>Refaire le Quiz Simple</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="cheatsheet" role="tabpanel">
+                <h2 class="mb-4"><i class="fas fa-clipboard-list text-primary me-2"></i>Cheatsheet Examen PMP</h2>
+                <p class="lead">Mémo condensé des concepts clés pour la préparation à l'examen PMP.</p>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="cheatsheet-item">
+                            <h5>Formules Importantes</h5>
+                            <ul>
+                                <li><strong>Valeur Acquise (EV):</strong> % complet × BAC</li>
+                                <li><strong>Coût Réel (AC):</strong> Coût réel engagé</li>
+                                <li><strong>Indice de Performance des Coûts (CPI):</strong> EV / AC</li>
+                                <li><strong>Indice de Performance du Planning (SPI):</strong> EV / PV</li>
+                                <li><strong>Estimation à l'Achèvement (EAC):</strong> BAC / CPI</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cheatsheet-item">
+                            <h5>Documents Clés</h5>
+                            <ul>
+                                <li><strong>Project Charter:</strong> Autorise le projet</li>
+                                <li><strong>Project Management Plan:</strong> Guide l'exécution</li>
+                                <li><strong>Scope Statement:</strong> Définit le périmètre</li>
+                                <li><strong>Risk Register:</strong> Liste des risques</li>
+                                <li><strong>Stakeholder Register:</strong> Liste des parties prenantes</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="cheatsheet-item">
+                            <h5>Acronymes Importants</h5>
+                            <ul>
+                                <li><strong>BAC:</strong> Budget At Completion</li>
+                                <li><strong>EAC:</strong> Estimate At Completion</li>
+                                <li><strong>ETC:</strong> Estimate To Complete</li>
+                                <li><strong>WBS:</strong> Work Breakdown Structure</li>
+                                <li><strong>RACI:</strong> Responsible, Accountable, Consulted, Informed</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cheatsheet-item">
+                            <h5>Conseils pour l'Examen</h5>
+                            <ol>
+                                <li>Gérez votre temps (environ 1 minute par question)</li>
+                                <li>Lisez attentivement chaque question</li>
+                                <li>Éliminez d'abord les réponses manifestement fausses</li>
+                                <li>Privilégiez la réponse la plus complète et professionnelle</li>
+                                <li>Revoyez les questions marquées si le temps le permet</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-2"></i>Processus par Domaine de Connaissances
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Domaine</th>
+                                        <th>Processus Clés</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Scope</td>
+                                        <td>Collect Requirements, Define Scope, Create WBS</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Time</td>
+                                        <td>Define Activities, Sequence Activities, Estimate Activity Durations</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cost</td>
+                                        <td>Estimate Costs, Determine Budget, Control Costs</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="floating-btn" id="scrollToTopBtn" title="Retour en haut">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script>
+    // Smooth scroll to top
+    document.getElementById('scrollToTopBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Show/hide scroll to top button
+    window.onscroll = function() {
+        var scrollButton = document.getElementById('scrollToTopBtn');
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            scrollButton.style.display = "flex";
+        } else {
+            scrollButton.style.display = "none";
+        }
+    };
+
+    // Chart for domains distribution
+    const ctx = document.getElementById('domainsChart').getContext('2d');
+    const domainsChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['People (42%)', 'Process (50%)', 'Business Environment (8%)'],
+            datasets: [{
+                data: [42, 50, 8],
+                backgroundColor: [
+                    '#3498db',
+                    '#2ecc71',
+                    '#e74c3c'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right',
+                }
+            }
+        }
+    });
+
+    // --- Quiz Learn Data ---
+    const quizLearnQuestions = [
+        {
+            question: "Quel est le document qui autorise formellement le démarrage d'un projet?",
+            options: [
+                "Business Case",
+                "Project Management Plan",
+                "Project Charter",
+                "Scope Statement"
+            ],
+            correctAnswer: "Project Charter",
+            explanation: "Le **Project Charter** est le document qui autorise formellement un projet. Il est créé pendant le processus 'Develop Project Charter' dans le groupe de processus Initiating. Le Business Case justifie le projet mais ne l'autorise pas. Le Project Management Plan est développé plus tard, pendant la planification. Le Scope Statement fait partie de la documentation du périmètre."
+        },
+        {
+            question: "Quel est l'objectif principal du processus 'Develop Project Management Plan'?",
+            options: [
+                "Autoriser le projet",
+                "Établir le périmètre détaillé",
+                "Définir comment le projet sera exécuté, surveillé, contrôlé et clôturé",
+                "Gérer les attentes des parties prenantes"
+            ],
+            correctAnswer: "Définir comment le projet sera exécuté, surveillé, contrôlé et clôturé",
+            explanation: "Le processus 'Develop Project Management Plan' est crucial car il intègre tous les plans subsidiaires pour former un document complet qui guide la gestion du projet du début à la fin. Il ne se limite pas à autoriser le projet (fait par le Project Charter) ou à établir le périmètre détaillé (fait par Define Scope)."
+        },
+        {
+            question: "Dans quel groupe de processus le chef de projet et l'équipe travaillent-ils à réaliser le travail défini dans le plan de gestion de projet?",
+            options: [
+                "Initiating",
+                "Planning",
+                "Executing",
+                "Monitoring & Controlling"
+            ],
+            correctAnswer: "Executing",
+            explanation: "Le groupe de processus **Executing** est celui où le travail réel du projet est réalisé, en suivant le plan de gestion de projet. Les autres groupes se concentrent sur la définition, la planification, le suivi et la clôture."
+        },
+        {
+            question: "Quelle est la principale sortie du processus 'Direct and Manage Project Work'?",
+            options: [
+                "Project Charter",
+                "Work Performance Data",
+                "Change Requests",
+                "Deliverables"
+            ],
+            correctAnswer: "Deliverables",
+            explanation: "Le processus 'Direct and Manage Project Work' est en charge de la production des **Deliverables** (les livrables du projet) et de la gestion de l'équipe du projet. Les Work Performance Data sont une entrée, et les Change Requests peuvent être une sortie, mais les livrables sont la sortie la plus directe et tangible."
+        },
+        {
+            question: "Quel domaine de connaissances se concentre sur l'identification des risques, l'analyse et la planification des réponses?",
+            options: [
+                "Scope Management",
+                "Cost Management",
+                "Quality Management",
+                "Risk Management"
+            ],
+            correctAnswer: "Risk Management",
+            explanation: "Le **Risk Management** (Gestion des Risques) est le domaine de connaissances dédié à l'identification, l'analyse, la planification des réponses et le suivi des risques du projet."
+        },
+        {
+            question: "Lequel des éléments suivants est un exemple d'outil et de technique utilisé dans la gestion des communications?",
+            options: [
+                "Bottom-up estimating",
+                "Communication methods",
+                "WBS",
+                "Control charts"
+            ],
+            correctAnswer: "Communication methods",
+            explanation: "Les **Communication methods** (méthodes de communication) sont des outils et techniques clés en gestion des communications, incluant les réunions, les e-mails, les rapports, etc. Les autres options appartiennent à d'autres domaines (estimation des coûts, périmètre, qualité)."
+        },
+        {
+            question: "Quel est l'objectif principal du processus 'Control Scope'?",
+            options: [
+                "Définir ce qui est inclus et exclu du projet",
+                "Valider l'acceptation des livrables par le client",
+                "Surveiller le statut du périmètre du projet et de produit et gérer les changements au baseline de périmètre",
+                "Décomposer les livrables du projet en composants plus petits et plus gérables"
+            ],
+            correctAnswer: "Surveiller le statut du périmètre du projet et de produit et gérer les changements au baseline de périmètre",
+            explanation: "Le processus **Control Scope** est axé sur la surveillance du périmètre et la gestion des changements pour s'assurer que seuls les changements approuvés sont incorporés. 'Define Scope' définit ce qui est inclus. 'Validate Scope' obtient l'acceptation. 'Create WBS' décompose le périmètre."
+        },
+        {
+            question: "Qu'est-ce que le 'Project Scope Statement' décrit en détail?",
+            options: [
+                "Les exigences du projet",
+                "Les hypothèses et contraintes",
+                "La description détaillée du périmètre du projet et du produit",
+                "Tous les éléments ci-dessus"
+            ],
+            correctAnswer: "Tous les éléments ci-dessus",
+            explanation: "Le **Project Scope Statement** est un document clé qui décrit en détail le périmètre du projet et du produit, y compris les livrables, les exclusions, les hypothèses et les contraintes."
+        },
+        {
+            question: "Quelle est la formule correcte pour le CPI (Cost Performance Index)?",
+            options: [
+                "BAC / EAC",
+                "EV / AC",
+                "EV / PV",
+                "AC / EV"
+            ],
+            correctAnswer: "EV / AC",
+            explanation: "Le **Cost Performance Index (CPI)** est une mesure de l'efficience des coûts sur un projet. Il est calculé en divisant la Valeur Acquise (Earned Value - EV) par le Coût Réel (Actual Cost - AC). Un CPI supérieur à 1 indique que le projet est en dessous du budget."
+        },
+        {
+            question: "Quel outil est utilisé pour décomposer le travail du projet en éléments plus petits et plus gérables?",
+            options: [
+                "Gantt Chart",
+                "Network Diagram",
+                "Work Breakdown Structure (WBS)",
+                "Resource Breakdown Structure (RBS)"
+            ],
+            correctAnswer: "Work Breakdown Structure (WBS)",
+            explanation: "La **Work Breakdown Structure (WBS)** est une décomposition hiérarchique du travail total à réaliser par l'équipe de projet pour atteindre les objectifs du projet et créer les livrables requis."
+        },
+        {
+            question: "Quelle est la différence principale entre les approches prédictives (Waterfall) et adaptatives (Agile)?",
+            options: [
+                "Les approches prédictives n'utilisent pas de planification, contrairement aux adaptatives.",
+                "Les approches prédictives sont itératives, tandis que les adaptatives sont séquentielles.",
+                "Les approches prédictives ont un périmètre fixe, les adaptatives acceptent le changement et sont itératives.",
+                "Il n'y a pas de différence majeure, juste une terminologie différente."
+            ],
+            correctAnswer: "Les approches prédictives ont un périmètre fixe, les adaptatives acceptent le changement et sont itératives.",
+            explanation: "Les approches **prédictives** (comme Waterfall) définissent le périmètre en amont et suivent un plan séquentiel, tandis que les approches **adaptatives** (Agile) acceptent le changement tout au long du cycle de vie du projet via des itérations courtes."
+        },
+        {
+            question: "Qu'est-ce qu'une 'Constraint' (contrainte) dans la gestion de projet?",
+            options: [
+                "Une opportunité pour le projet",
+                "Un facteur limitant qui affectera le résultat du projet",
+                "Une condition ou capacité qui doit être présente dans un produit, service ou résultat",
+                "Un événement incertain qui, s'il se produit, a un effet positif ou négatif sur un objectif du projet"
+            ],
+            correctAnswer: "Un facteur limitant qui affectera le résultat du projet",
+            explanation: "Une **contrainte** est un facteur limitant qui affecte la flexibilité de la gestion de projet. Les exemples courants incluent le budget, le calendrier, le périmètre et la qualité."
+        },
+        {
+            question: "Quel est le rôle principal du sponsor du projet?",
+            options: [
+                "Gérer l'équipe de projet au quotidien",
+                "Approuver et financer le projet, et soutenir le chef de projet",
+                "Exécuter les tâches techniques du projet",
+                "Définir les exigences détaillées du client"
+            ],
+            correctAnswer: "Approuver et financer le projet, et soutenir le chef de projet",
+            explanation: "Le **sponsor du projet** est la personne ou le groupe qui fournit les ressources et le soutien au projet, et est responsable d'habiliter le chef de projet au succès. Il n'est généralement pas impliqué dans la gestion quotidienne de l'équipe ou les tâches techniques."
+        },
+        {
+            question: "Quelle technique est utilisée pour obtenir l'adhésion des experts dans un domaine spécifique pour recueillir des informations?",
+            options: [
+                "Brainstorming",
+                "Delphi Technique",
+                "Nominal Group Technique",
+                "Interviews"
+            ],
+            correctAnswer: "Delphi Technique",
+            explanation: "La **technique Delphi** est une méthode structurée de collecte d'informations auprès d'un groupe d'experts, de manière anonyme, pour parvenir à un consensus. Cela aide à éviter l'influence d'un individu sur les autres."
+        },
+        {
+            question: "Lorsque l'équipe de projet a besoin d'être formée et de commencer à travailler ensemble, dans quelle étape du développement de l'équipe (modèle de Tuckman) se trouve-t-elle?",
+            options: [
+                "Forming",
+                "Storming",
+                "Norming",
+                "Performing"
+            ],
+            correctAnswer: "Forming",
+            explanation: "Dans le modèle de Tuckman sur le développement de l'équipe, l'étape de **Forming** est la première, où l'équipe se constitue, apprend à se connaître et à comprendre le projet."
+        },
+        {
+            question: "Quel est l'objectif du processus 'Perform Integrated Change Control'?",
+            options: [
+                "Autoriser les changements au Project Charter",
+                "Examiner toutes les demandes de changement, approuver les changements et gérer les modifications des livrables et des documents du projet",
+                "Communiquer les changements aux parties prenantes",
+                "Mettre en œuvre les changements approuvés"
+            ],
+            correctAnswer: "Examiner toutes les demandes de changement, approuver les changements et gérer les modifications des livrables et des documents du projet",
+            explanation: "Le processus **Perform Integrated Change Control** est essentiel pour gérer les changements de manière cohérente et assurer que seuls les changements approuvés sont implémentés, en évaluant leur impact sur l'ensemble du projet."
+        },
+        {
+            question: "Quel est l'objectif d'un 'lessons learned register' (registre des leçons apprises)?",
+            options: [
+                "Documenter les risques du projet",
+                "Enregistrer les problèmes et obstacles rencontrés pendant le projet",
+                "Capturer les connaissances acquises pendant le projet pour les projets futurs",
+                "Suivre le budget du projet"
+            ],
+            correctAnswer: "Capturer les connaissances acquises pendant le projet pour les projets futurs",
+            explanation: "Le **lessons learned register** est un dépôt de connaissances qui documente les réussites, les échecs, les défis et les opportunités rencontrées, afin d'améliorer les performances des projets futurs."
+        },
+        {
+            question: "Dans la gestion des approvisionnements, qu'est-ce qu'un 'Statement of Work (SOW)'?",
+            options: [
+                "Un document qui spécifie la durée du contrat",
+                "Une description détaillée du travail à réaliser pour un fournisseur",
+                "Un accord légal entre deux parties",
+                "Le plan de gestion des risques du fournisseur"
+            ],
+            correctAnswer: "Une description détaillée du travail à réaliser pour un fournisseur",
+            explanation: "Le **Statement of Work (SOW)** dans un contexte d'approvisionnement est un document qui décrit les biens ou services spécifiques à acquérir en détail, y compris la portée du travail, les livrables, les performances requises, etc."
+        },
+        {
+            question: "Quel est le but de la 'RACI Matrix'?",
+            options: [
+                "Détailler le chemin critique d'un projet",
+                "Définir les rôles et responsabilités des parties prenantes clés",
+                "Suivre le progrès du projet par rapport au budget",
+                "Identifier les dépendances entre les activités"
+            ],
+            correctAnswer: "Définir les rôles et responsabilités des parties prenantes clés",
+            explanation: "La **matrice RACI** (Responsible, Accountable, Consulted, Informed) est un outil de gestion des ressources qui aide à clarifier les rôles et responsabilités pour les activités ou les livrables du projet."
+        },
+        {
+            question: "Qu'est-ce que l'EVA (Earned Value Analysis) permet de mesurer?",
+            options: [
+                "L'évaluation de la qualité des livrables",
+                "La performance du projet en termes de coût et de planning",
+                "La satisfaction des parties prenantes",
+                "Les risques techniques du projet"
+            ],
+            correctAnswer: "La performance du projet en termes de coût et de planning",
+            explanation: "L'**Earned Value Analysis (EVA)** est une technique de gestion de projet qui intègre le périmètre, le coût et le planning pour évaluer la performance et le progrès du projet de manière objective."
+        },
+        {
+            question: "Quel est le principal objectif du processus 'Validate Scope'?",
+            options: [
+                "Vérifier l'exactitude des livrables",
+                "Obtenir l'acceptation formelle des livrables du projet par le client ou le sponsor",
+                "Contrôler les changements au périmètre",
+                "Définir les exigences des parties prenantes"
+            ],
+            correctAnswer: "Obtenir l'acceptation formelle des livrables du projet par le client ou le sponsor",
+            explanation: "Le processus **Validate Scope** consiste à obtenir l'acceptation formelle des livrables terminés par les parties prenantes pertinentes, souvent le client ou le sponsor. Il est distinct de la vérification de la qualité des livrables (Control Quality)."
+        },
+        {
+            question: "Lorsqu'un chef de projet s'assure que les informations sont disponibles au bon moment, au bon format et à la bonne audience, quel domaine de connaissances est-il en train de gérer?",
+            options: [
+                "Resource Management",
+                "Communications Management",
+                "Stakeholder Management",
+                "Quality Management"
+            ],
+            correctAnswer: "Communications Management",
+            explanation: "Le **Communications Management** (Gestion des Communications) est le domaine de connaissances qui se concentre sur la planification, la collecte, la création, la diffusion, le stockage, la récupération et la disposition finales des informations du projet."
+        },
+        {
+            question: "Quelle est la première étape dans le processus de gestion des risques?",
+            options: [
+                "Plan Risk Responses",
+                "Identify Risks",
+                "Perform Qualitative Risk Analysis",
+                "Monitor Risks"
+            ],
+            correctAnswer: "Identify Risks",
+            explanation: "La première étape dans le processus de gestion des risques est toujours d'**Identifier les Risques** pour déterminer quels risques peuvent affecter le projet et documenter leurs caractéristiques."
+        },
+        {
+            question: "Dans quel processus le budget du projet est-il agrégé pour établir la baseline des coûts?",
+            options: [
+                "Estimate Costs",
+                "Determine Budget",
+                "Control Costs",
+                "Plan Cost Management"
+            ],
+            correctAnswer: "Determine Budget",
+            explanation: "Le processus **Determine Budget** consiste à agréger les coûts estimés des activités ou des lots de travail individuels pour établir une baseline des coûts autorisée, qui est le budget total du projet."
+        },
+        {
+            question: "Quelle est la principale fonction du 'Change Control Board (CCB)'?",
+            options: [
+                "Approuver le Project Charter",
+                "Gérer les communications du projet",
+                "Examiner, évaluer et approuver ou rejeter les demandes de changement",
+                "Développer les estimations de coûts du projet"
+            ],
+            correctAnswer: "Examiner, évaluer et approuver ou rejeter les demandes de changement",
+            explanation: "Le **Change Control Board (CCB)** est un groupe formel de parties prenantes qui est responsable d'examiner et d'approuver (ou de rejeter) les demandes de changement sur un projet."
+        },
+        {
+            question: "Quelle formule est utilisée pour calculer l'ETC (Estimate To Complete) si la variance future sera la même que la variance passée?",
+            options: [
+                "EAC - AC",
+                "BAC - EV",
+                "(BAC - EV) / CPI",
+                "(BAC - EV) / SPI"
+            ],
+            correctAnswer: "(BAC - EV) / CPI",
+            explanation: "Lorsque la variance future est censée être la même que la variance passée, l'Estimate To Complete (ETC) est calculé comme le budget restant (BAC - EV) divisé par le Cost Performance Index (CPI)."
+        }
+    ];
+
+    // --- Quiz Simple Data ---
+    const quizSimpleQuestions = [
+        {
+            question: "Quel groupe de processus comprend le 'Develop Schedule'?",
+            options: ["Initiating", "Planning", "Executing", "Monitoring & Controlling"],
+            correctAnswer: "Planning",
+            explanation: "'Develop Schedule' fait partie du groupe de processus Planning et du domaine de connaissances Schedule Management. C'est l'un des processus clés pour établir le calendrier du projet après avoir défini et séquencé les activités et estimé leurs durées."
+        },
+        {
+            question: "Le CPI (Cost Performance Index) est calculé par:",
+            options: ["BAC / EAC", "EV / AC", "EV / PV", "AC / EV"],
+            correctAnswer: "EV / AC",
+            explanation: "Le Cost Performance Index (CPI) est une mesure de l'efficience des coûts sur un projet. Il est calculé en divisant la Valeur Acquise (Earned Value - EV) par le Coût Réel (Actual Cost - AC). Un CPI supérieur à 1 indique que le projet est en dessous du budget."
+        },
+        {
+            question: "Le document qui autorise formellement un projet est le:",
+            options: ["Business Case", "Project Charter", "Scope Statement", "Project Management Plan"],
+            correctAnswer: "Project Charter",
+            explanation: "Le Project Charter est le document formel qui autorise l'existence d'un projet et donne au chef de projet l'autorité d'appliquer les ressources de l'organisation aux activités du projet."
+        },
+        {
+            question: "Quelle est la formule pour l'SPI (Schedule Performance Index)?",
+            options: ["EV / AC", "EV / PV", "PV / AC", "BAC / EAC"],
+            correctAnswer: "EV / PV",
+            explanation: "L'indice de performance du calendrier (SPI) mesure l'efficience du calendrier du projet. Il est calculé en divisant la valeur acquise (EV) par la valeur planifiée (PV)."
+        },
+        {
+            question: "Quel est le but principal de la WBS (Work Breakdown Structure)?",
+            options: ["Gérer les risques", "Décomposer le travail du projet", "Estimer les coûts", "Créer le calendrier"],
+            correctAnswer: "Décomposer le travail du projet",
+            explanation: "La WBS est une décomposition hiérarchique du travail total à réaliser par l'équipe de projet pour atteindre les objectifs du projet et créer les livrables requis."
+        },
+        {
+            question: "Qui est responsable de l'approbation et du financement du projet?",
+            options: ["Le chef de projet", "L'équipe du projet", "Le sponsor du projet", "Les parties prenantes"],
+            correctAnswer: "Le sponsor du projet",
+            explanation: "Le sponsor du projet est la personne ou le groupe qui fournit les ressources et le soutien au projet, et est responsable d'habiliter le chef de projet au succès."
+        },
+        {
+            question: "Quelle phase d'un projet inclut la surveillance et le suivi de la progression?",
+            options: ["Initiating", "Planning", "Executing", "Monitoring & Controlling"],
+            correctAnswer: "Monitoring & Controlling",
+            explanation: "Le groupe de processus Monitoring & Controlling comprend les processus requis pour suivre, examiner et réguler l'avancement et la performance du projet."
+        },
+        {
+            question: "Un facteur limitant qui affectera le résultat du projet est appelé:",
+            options: ["Opportunité", "Contrainte", "Risque", "Hypothèse"],
+            correctAnswer: "Contrainte",
+            explanation: "Une contrainte est un facteur limitant qui affecte la flexibilité de la gestion de projet, comme le temps, le coût, le périmètre, la qualité, les ressources, etc."
+        },
+        {
+            question: "Dans quel domaine de connaissances la matrice RACI est-elle le plus souvent utilisée?",
+            options: ["Quality Management", "Resource Management", "Communications Management", "Stakeholder Management"],
+            correctAnswer: "Resource Management",
+            explanation: "La matrice RACI (Responsible, Accountable, Consulted, Informed) est un outil de gestion des ressources humaines (désormais Resource Management) pour définir les rôles et responsabilités."
+        },
+        {
+            question: "Quel est l'objectif principal du processus 'Control Quality'?",
+            options: ["Obtenir l'acceptation du client", "Vérifier que les livrables sont corrects et conformes aux normes", "Planifier la gestion de la qualité", "Identifier les parties prenantes"],
+            correctAnswer: "Vérifier que les livrables sont corrects et conformes aux normes",
+            explanation: "Control Quality (Maîtrise de la qualité) consiste à surveiller les résultats spécifiques du projet pour déterminer s'ils sont conformes aux normes de qualité pertinentes et identifier les moyens d'éliminer les causes de résultats insatisfaisants."
+        },
+        {
+            question: "Quelle approche de développement est itérative et adaptative?",
+            options: ["Waterfall", "Predictive", "Agile", "Lean"],
+            correctAnswer: "Agile",
+            explanation: "Les approches Agile sont caractérisées par des cycles de développement itératifs et adaptatifs, permettant une flexibilité et une réponse rapide aux changements."
+        },
+        {
+            question: "Le registre des leçons apprises (lessons learned register) est mis à jour tout au long de quel groupe de processus?",
+            options: ["Initiating", "Planning", "Executing", "Closing"],
+            correctAnswer: "Executing",
+            explanation: "Le registre des leçons apprises est un document dynamique qui est mis à jour tout au long du groupe de processus Executing, à mesure que de nouvelles connaissances sont acquises."
+        },
+        {
+            question: "Quel est le résultat principal du processus 'Develop Project Charter'?",
+            options: ["Project Management Plan", "Project Charter", "Risk Register", "Stakeholder Register"],
+            correctAnswer: "Project Charter",
+            explanation: "Le Project Charter est la sortie clé du processus 'Develop Project Charter', autorisant formellement le projet."
+        },
+        {
+            question: "Quel domaine de connaissances gère les achats ou les acquisitions externes pour le projet?",
+            options: ["Resource Management", "Procurement Management", "Cost Management", "Risk Management"],
+            correctAnswer: "Procurement Management",
+            explanation: "Le Procurement Management (Gestion des Approvisionnements) couvre les processus nécessaires à l'achat ou à l'acquisition de produits, de services ou de résultats externes au projet."
+        },
+        {
+            question: "Un diagramme de Gantt est principalement utilisé pour:",
+            options: ["Gérer les risques", "Afficher le calendrier du projet", "Calculer le budget", "Identifier les parties prenantes"],
+            correctAnswer: "Afficher le calendrier du projet",
+            explanation: "Un diagramme de Gantt est un outil de planification et de suivi qui illustre le calendrier d'un projet, montrant les dates de début et de fin des activités."
+        },
+        {
+            question: "Quelle est la fonction d'un 'Change Request'?",
+            options: ["Documenter les leçons apprises", "Demander une modification formelle à un livrable ou à un document", "Analyser les risques", "Approuver le budget"],
+            correctAnswer: "Demander une modification formelle à un livrable ou à un document",
+            explanation: "Une demande de changement (Change Request) est une proposition formelle pour modifier un document, un livrable ou une baseline."
+        },
+        {
+            question: "Quel processus établit les lignes directrices pour le coût, le planning et la performance du périmètre?",
+            options: ["Monitor and Control Project Work", "Perform Integrated Change Control", "Develop Project Management Plan", "Direct and Manage Project Work"],
+            correctAnswer: "Develop Project Management Plan",
+            explanation: "Le processus 'Develop Project Management Plan' est celui où toutes les baselines (périmètre, calendrier, coût) et les plans subsidiaires sont consolidés pour guider le projet."
+        },
+        {
+            question: "Lequel des éléments suivants n'est PAS une phase typique du cycle de vie d'un projet?",
+            options: ["Démarrage", "Exécution", "Maintenance", "Clôture"],
+            correctAnswer: "Maintenance",
+            explanation: "Les phases typiques du cycle de vie d'un projet selon le PMBOK sont Démarrage, Planification, Exécution, Surveillance et contrôle, et Clôture. La maintenance est généralement une activité opérationnelle après la clôture du projet."
+        },
+        {
+            question: "Quel est le but d'une analyse des parties prenantes?",
+            options: ["Déterminer les compétences de l'équipe", "Identifier et comprendre l'influence et l'intérêt des parties prenantes", "Estimer la durée des activités", "Planifier les communications"],
+            correctAnswer: "Identifier et comprendre l'influence et l'intérêt des parties prenantes",
+            explanation: "L'analyse des parties prenantes vise à identifier toutes les parties prenantes, leurs niveaux d'intérêt, leur influence et leur impact potentiel sur le projet."
+        },
+        {
+            question: "Quelle est la principale différence entre 'Validation du périmètre' et 'Maîtrise de la qualité'?",
+            options: ["La validation du périmètre est interne, la maîtrise de la qualité est externe.", "La validation du périmètre est axée sur l'acceptation, la maîtrise de la qualité sur la correction.", "La validation du périmètre est effectuée avant la maîtrise de la qualité.", "Ce sont des termes interchangeables."],
+            correctAnswer: "La validation du périmètre est axée sur l'acceptation, la maîtrise de la qualité sur la correction.",
+            explanation: "La **Validation du périmètre** (Validate Scope) se concentre sur l'obtention de l'acceptation formelle des livrables. La **Maîtrise de la qualité** (Control Quality) se concentre sur la vérification que les livrables sont corrects et répondent aux exigences spécifiées."
+        },
+        {
+            question: "Quel terme est utilisé pour décrire le travail non planifié qui s'ajoute au projet sans valeur ajoutée?",
+            options: ["Scope Creep", "Gold Plating", "Risk Event", "Change Request"],
+            correctAnswer: "Scope Creep",
+            explanation: "**Scope Creep** (dérive du périmètre) fait référence à l'ajout non contrôlé de fonctionnalités ou de fonctions sans prise en compte des délais, du coût ou des ressources, souvent sans l'approbation formelle des parties prenantes."
+        },
+        {
+            question: "Quel est l'objectif du processus 'Close Project or Phase'?",
+            options: ["Démarrer une nouvelle phase", "Terminer toutes les activités, contractualiser les engagements et livrer le produit final", "Définir le périmètre du projet", "Gérer les communications du projet"],
+            correctAnswer: "Terminer toutes les activités, contractualiser les engagements et livrer le produit final",
+            explanation: "Le processus 'Close Project or Phase' (Clôturer le projet ou la phase) formalise l'achèvement de toutes les activités d'un projet ou d'une phase, y compris la clôture des contrats et le transfert des livrables."
+        },
+        {
+            question: "Quel est l'un des bénéfices clés de l'utilisation de l'Earned Value Management (EVM)?",
+            options: ["Améliorer la gestion des ressources humaines", "Fournir une vue intégrée de la performance du coût et du calendrier", "Faciliter la gestion des risques", "Simplifier la collecte des exigences"],
+            correctAnswer: "Fournir une vue intégrée de la performance du coût et du calendrier",
+            explanation: "L'EVM est une méthode puissante qui intègre le périmètre, le calendrier et le coût pour donner une mesure objective de la performance du projet."
+        },
+        {
+            question: "Le diagramme de réseau du projet (Project Network Diagram) est principalement utilisé pour:",
+            options: ["Afficher la hiérarchie de l'équipe", "Visualiser la séquence des activités et leurs dépendances", "Suivre les dépenses du projet", "Gérer les problèmes"],
+            correctAnswer: "Visualiser la séquence des activités et leurs dépendances",
+            explanation: "Un diagramme de réseau du projet est une représentation graphique des relations logiques entre les activités du projet, montrant la séquence dans laquelle elles doivent être effectuées."
+        },
+        {
+            question: "Quelle est l'importance du 'Business Case' pour un projet?",
+            options: ["Il autorise formellement le projet", "Il justifie l'existence et la valeur du projet", "Il définit les livrables du projet", "Il fournit les estimations de coûts détaillées"],
+            correctAnswer: "Il justifie l'existence et la valeur du projet",
+            explanation: "Le Business Case décrit la justification économique du projet et est utilisé pour prendre la décision d'investir ou non dans le projet. Il n'autorise pas formellement le projet (c'est le Project Charter)."
+        },
+        {
+            question: "Quand le chef de projet a-t-il le plus d'influence sur le coût du projet?",
+            options: ["Au début du projet (Initiating/Planning)", "Pendant l'exécution", "Pendant la surveillance et le contrôle", "À la clôture du projet"],
+            correctAnswer: "Au début du projet (Initiating/Planning)",
+            explanation: "L'influence du chef de projet sur le coût est la plus élevée au début du projet, lorsque les décisions de conception et de planification ont un impact significatif sur les dépenses futures."
+        },
+        {
+            question: "La méthode 'Critical Path Method (CPM)' est utilisée pour:",
+            options: ["Gérer les communications", "Déterminer la durée la plus courte possible du projet", "Analyser les risques", "Allouer les ressources"],
+            correctAnswer: "Déterminer la durée la plus courte possible du projet",
+            explanation: "La méthode du chemin critique (CPM) est une technique d'analyse de réseau de projet utilisée pour estimer la durée la plus courte possible d'un projet en identifiant les activités qui ne peuvent pas être retardées sans retarder l'ensemble du projet."
+        },
+        {
+            question: "Quel est le but d'un 'Risk Register'?",
+            options: ["Enregistrer les heures travaillées par l'équipe", "Documenter les informations sur les risques identifiés", "Suivre les dépenses du projet", "Gérer les relations avec les parties prenantes"],
+            correctAnswer: "Documenter les informations sur les risques identifiés",
+            explanation: "Le registre des risques (Risk Register) est un document qui contient les résultats de l'analyse des risques et les plans de réponse aux risques, et est mis à jour tout au long du projet."
+        },
+        {
+            question: "Le 'PMBOK Guide' est un standard pour:",
+            options: ["Le développement de logiciels", "La gestion de projet", "La gestion des opérations", "La gestion de la qualité"],
+            correctAnswer: "La gestion de projet",
+            explanation: "Le PMBOK Guide (Project Management Body of Knowledge Guide) est une publication du Project Management Institute (PMI) qui fournit des lignes directrices pour les processus et les domaines de connaissances de la gestion de projet."
+        },
+        {
+            question: "Quel processus est responsable de l'obtention des ressources nécessaires pour exécuter les activités du projet?",
+            options: ["Plan Resource Management", "Estimate Activity Resources", "Acquire Resources", "Develop Team"],
+            correctAnswer: "Acquire Resources",
+            explanation: "Le processus 'Acquire Resources' (Acquérir les ressources) est celui où les ressources physiques et les membres de l'équipe sont obtenus pour mener à bien le travail du projet."
+        },
+        {
+            question: "Une 'Baseline' (ligne de référence) dans la gestion de projet est:",
+            options: ["Le plan initial du projet", "Le périmètre, le calendrier et le budget approuvés", "La communication avec les parties prenantes", "La gestion des problèmes"],
+            correctAnswer: "Le périmètre, le calendrier et le budget approuvés",
+            explanation: "Les baselines de performance (scope, schedule, cost) représentent les plans approuvés par rapport auxquels la performance du projet est mesurée."
+        },
+        {
+            question: "Quel est le dernier groupe de processus dans le cycle de vie du projet?",
+            options: ["Planning", "Executing", "Monitoring & Controlling", "Closing"],
+            correctAnswer: "Closing",
+            explanation: "Le groupe de processus Closing (Clôture) est le dernier, visant à finaliser toutes les activités pour clore formellement le projet ou la phase."
+        },
+        {
+            question: "La 'Project Management Office (PMO)' est responsable de:",
+            options: ["L'exécution des tâches du projet", "La gestion des opérations quotidiennes", "La standardisation des processus de gestion de projet", "La gestion des risques individuels"],
+            correctAnswer: "La standardisation des processus de gestion de projet",
+            explanation: "Un PMO est une structure organisationnelle qui standardise les processus de gouvernance liés au projet et facilite le partage des ressources, des méthodologies, des outils et des techniques."
+        },
+        {
+            question: "L'outil 'Control Charts' est utilisé pour quelle gestion de projet?",
+            options: ["Gestion des coûts", "Gestion de la qualité", "Gestion des risques", "Gestion des ressources"],
+            correctAnswer: "Gestion de la qualité",
+            explanation: "Les Control Charts (cartes de contrôle) sont des outils de gestion de la qualité utilisés pour déterminer si un processus est stable ou présente une variation hors contrôle."
+        },
+        {
+            question: "Quel est le but des réunions 'Daily Stand-up' en Agile?",
+            options: ["Planifier les sprints futurs", "Discuter des problèmes à long terme", "Synchroniser les activités de l'équipe et identifier les obstacles", "Présenter les livrables au client"],
+            correctAnswer: "Synchroniser les activités de l'équipe et identifier les obstacles",
+            explanation: "Les Daily Stand-up (ou Scrums quotidiens) sont de courtes réunions pour que l'équipe se synchronise, discute des progrès et identifie les impediments (obstacles)."
+        }
+        // Add more questions here to reach at least 30 for Quiz Simple
+    ];
+
+    // --- Quiz Learn Logic ---
+    let currentQuizLearnQuestionIndex = 0;
+    let quizLearnScore = 0;
+    let selectedQuizLearnOption = null;
+
+    const quizLearnContainer = document.getElementById('quizContainer');
+    const questionLearnDisplay = document.getElementById('questionDisplay');
+    const explanationLearnDisplay = document.getElementById('explanationDisplay');
+    const currentQuestionLearnNumberSpan = document.getElementById('currentQuestionNumber');
+    const totalQuestionsLearnCountSpan = document.getElementById('totalQuestionsCount');
+    const nextQuestionLearnBtn = document.getElementById('nextQuestionBtn');
+    const restartQuizLearnBtn = document.getElementById('restartQuizBtn');
+    const quizLearnResults = document.getElementById('quizResults');
+    const scoreLearnDisplay = document.getElementById('scoreDisplay');
+    const totalQuestionsLearnFinalDisplay = document.getElementById('totalQuestionsFinalDisplay');
+    const progressBarLearnScore = document.getElementById('progressBarScore');
+    const recommendationsLearn = document.getElementById('recommendations');
+    const retakeQuizLearnBtn = document.getElementById('retakeQuizBtn');
+
+    function loadQuizLearnQuestion() {
+        totalQuestionsLearnCountSpan.textContent = quizLearnQuestions.length;
+
+        if (currentQuizLearnQuestionIndex < quizLearnQuestions.length) {
+            const questionData = quizLearnQuestions[currentQuizLearnQuestionIndex];
+            currentQuestionLearnNumberSpan.textContent = currentQuizLearnQuestionIndex + 1;
+            questionLearnDisplay.querySelector('h4').textContent = questionData.question;
+
+            const optionsContainer = questionLearnDisplay.querySelectorAll('.quiz-option');
+            optionsContainer.forEach((optionElement, index) => {
+                optionElement.textContent = questionData.options[index];
+                optionElement.classList.remove('selected', 'correct', 'incorrect'); // Reset classes
+                optionElement.setAttribute('data-correct', (questionData.options[index] === questionData.correctAnswer).toString());
+                optionElement.onclick = () => selectQuizLearnOption(optionElement);
+            });
+
+            explanationLearnDisplay.style.display = 'none';
+            nextQuestionLearnBtn.style.display = 'block';
+            restartQuizLearnBtn.style.display = 'none';
+            selectedQuizLearnOption = null;
+        } else {
+            showQuizLearnResults();
+        }
+    }
+
+    function selectQuizLearnOption(optionElement) {
+        if (selectedQuizLearnOption) {
+            return;
+        }
+
+        questionLearnDisplay.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.classList.remove('selected');
+        });
+
+        optionElement.classList.add('selected');
+        selectedQuizLearnOption = optionElement;
+
+        if (optionElement.getAttribute('data-correct') === 'true') {
+            optionElement.classList.add('correct');
+            quizLearnScore++;
+        } else {
+            optionElement.classList.add('incorrect');
+            document.querySelector('#questionDisplay .quiz-option[data-correct="true"]').classList.add('correct');
+        }
+        explanationLearnDisplay.querySelector('p').innerHTML = quizLearnQuestions[currentQuizLearnQuestionIndex].explanation;
+        explanationLearnDisplay.style.display = 'block';
+    }
+
+    function showNextQuizLearnQuestion() {
+        currentQuizLearnQuestionIndex++;
+        loadQuizLearnQuestion();
+    }
+
+    function showQuizLearnResults() {
+        quizLearnContainer.style.display = 'none';
+        quizLearnResults.style.display = 'block';
+        scoreLearnDisplay.textContent = quizLearnScore;
+        totalQuestionsLearnFinalDisplay.textContent = quizLearnQuestions.length;
+
+        const percentage = (quizLearnScore / quizLearnQuestions.length) * 100;
+        progressBarLearnScore.style.width = percentage + '%';
+        progressBarLearnScore.setAttribute('aria-valuenow', percentage);
+
+        if (percentage >= 80) {
+            recommendationsLearn.className = 'alert mt-4 alert-success';
+            recommendationsLearn.innerHTML = `<h5><i class="fas fa-trophy me-2"></i>Félicitations !</h5><p>Excellent travail ! Vous avez une solide compréhension des concepts PMP. Continuez à vous entraîner !</p>`;
+        } else if (percentage >= 50) {
+            recommendationsLearn.className = 'alert mt-4 alert-warning';
+            recommendationsLearn.innerHTML = `<h5><i class="fas fa-lightbulb me-2"></i>Bonne Progression !</h5><p>Vous êtes sur la bonne voie. Revoyez les sections où vous avez eu des difficultés.</p>`;
+        } else {
+            recommendationsLearn.className = 'alert mt-4 alert-danger';
+            recommendationsLearn.innerHTML = `<h5><i class="fas fa-exclamation-triangle me-2"></i>À revoir !</h5><p>Il est important de revoir en profondeur les concepts clés du PMP. N'hésitez pas à consulter la section 'Bases de Connaissances'.</p>`;
+        }
+    }
+
+    function resetQuizLearn() {
+        currentQuizLearnQuestionIndex = 0;
+        quizLearnScore = 0;
+        quizLearnContainer.style.display = 'block';
+        quizLearnResults.style.display = 'none';
+        loadQuizLearnQuestion();
+    }
+
+    // Event Listeners for Quiz Learn
+    nextQuestionLearnBtn.addEventListener('click', showNextQuizLearnQuestion);
+    retakeQuizLearnBtn.addEventListener('click', resetQuizLearn);
+    restartQuizLearnBtn.addEventListener('click', resetQuizLearn);
+
+    // Initial load for Quiz Learn
+    loadQuizLearnQuestion();
+
+
+    // --- Quiz Simple Logic ---
+    let currentQuizSimpleQuestionIndex = 0;
+    let quizSimpleScore = 0;
+    let selectedQuizSimpleOption = null;
+
+    const quizSimpleContainer = document.getElementById('quizSimpleContainer');
+    const questionSimpleDisplay = document.getElementById('questionSimpleDisplay');
+    const explanationSimpleDisplay = document.getElementById('explanationSimpleDisplay');
+    const currentQuestionSimpleNumberSpan = document.getElementById('currentQuestionSimpleNumber');
+    const totalQuestionsSimpleCountSpan = document.getElementById('totalQuestionsSimpleCount');
+    const nextSimpleQuestionBtn = document.getElementById('nextSimpleQuestionBtn');
+    const restartSimpleQuizBtn = document.getElementById('restartSimpleQuizBtn');
+    const quizSimpleResults = document.getElementById('quizSimpleResults');
+    const scoreSimpleDisplay = document.getElementById('scoreSimpleDisplay');
+    const totalQuestionsSimpleFinalDisplay = document.getElementById('totalQuestionsSimpleFinalDisplay');
+    const progressBarSimpleScore = document.getElementById('progressBarSimpleScore');
+    const recommendationsSimple = document.getElementById('recommendationsSimple');
+    const retakeSimpleQuizBtn = document.getElementById('retakeSimpleQuizBtn');
+
+
+    function loadQuizSimpleQuestion() {
+        totalQuestionsSimpleCountSpan.textContent = quizSimpleQuestions.length;
+
+        if (currentQuizSimpleQuestionIndex < quizSimpleQuestions.length) {
+            const questionData = quizSimpleQuestions[currentQuizSimpleQuestionIndex];
+            currentQuestionSimpleNumberSpan.textContent = currentQuizSimpleQuestionIndex + 1;
+            questionSimpleDisplay.querySelector('h4').textContent = questionData.question;
+
+            const optionsContainer = questionSimpleDisplay.querySelectorAll('.quiz-option');
+            optionsContainer.forEach((optionElement, index) => {
+                optionElement.textContent = questionData.options[index];
+                optionElement.classList.remove('selected', 'correct', 'incorrect'); // Reset classes
+                optionElement.setAttribute('data-correct', (questionData.options[index] === questionData.correctAnswer).toString());
+                optionElement.onclick = () => selectQuizSimpleOption(optionElement);
+            });
+
+            explanationSimpleDisplay.style.display = 'none';
+            nextSimpleQuestionBtn.style.display = 'block';
+            restartSimpleQuizBtn.style.display = 'none';
+            selectedQuizSimpleOption = null;
+        } else {
+            showQuizSimpleResults();
+        }
+    }
+
+    function selectQuizSimpleOption(optionElement) {
+        if (selectedQuizSimpleOption) {
+            return;
+        }
+
+        questionSimpleDisplay.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.classList.remove('selected');
+        });
+
+        optionElement.classList.add('selected');
+        selectedQuizSimpleOption = optionElement;
+
+        if (optionElement.getAttribute('data-correct') === 'true') {
+            optionElement.classList.add('correct');
+            quizSimpleScore++;
+        } else {
+            optionElement.classList.add('incorrect');
+            document.querySelector('#questionSimpleDisplay .quiz-option[data-correct="true"]').classList.add('correct');
+        }
+        explanationSimpleDisplay.querySelector('p').innerHTML = quizSimpleQuestions[currentQuizSimpleQuestionIndex].explanation;
+        explanationSimpleDisplay.style.display = 'block';
+    }
+
+    function showNextQuizSimpleQuestion() {
+        currentQuizSimpleQuestionIndex++;
+        loadQuizSimpleQuestion();
+    }
+
+    function showQuizSimpleResults() {
+        quizSimpleContainer.style.display = 'none';
+        quizSimpleResults.style.display = 'block';
+        scoreSimpleDisplay.textContent = quizSimpleScore;
+        totalQuestionsSimpleFinalDisplay.textContent = quizSimpleQuestions.length;
+
+        const percentage = (quizSimpleScore / quizSimpleQuestions.length) * 100;
+        progressBarSimpleScore.style.width = percentage + '%';
+        progressBarSimpleScore.setAttribute('aria-valuenow', percentage);
+
+        if (percentage >= 80) {
+            recommendationsSimple.className = 'alert mt-4 alert-success';
+            recommendationsSimple.innerHTML = `<h5><i class="fas fa-trophy me-2"></i>Excellent !</h5><p>Vous avez atteint l'objectif de 80% ! Votre maîtrise des fondamentaux est bonne.</p>`;
+        } else {
+            recommendationsSimple.className = 'alert mt-4 alert-warning';
+            recommendationsSimple.innerHTML = `<h5><i class="fas fa-lightbulb me-2"></i>Besoin de revoir !</h5><p>Ciblez les domaines où vous avez rencontré des difficultés. Continuez à vous entraîner !</p>`;
+        }
+    }
+
+    function resetQuizSimple() {
+        currentQuizSimpleQuestionIndex = 0;
+        quizSimpleScore = 0;
+        quizSimpleContainer.style.display = 'block';
+        quizSimpleResults.style.display = 'none';
+        loadQuizSimpleQuestion();
+    }
+
+    // Event Listeners for Quiz Simple
+    nextSimpleQuestionBtn.addEventListener('click', showNextQuizSimpleQuestion);
+    retakeSimpleQuizBtn.addEventListener('click', resetQuizSimple);
+    restartSimpleQuizBtn.addEventListener('click', resetQuizSimple);
+
+    // Initial load for Quiz Simple
+    loadQuizSimpleQuestion();
+</script>
+</body>
+</html>
