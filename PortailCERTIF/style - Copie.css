@@ -1,0 +1,91 @@
+/* style.css : effet "whaou" moderne et responsive */
+
+body {
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #343a40;
+}
+
+h1, h3 {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #212529;
+  text-shadow: 1px 1px 2px #ced4da;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 8px 8px 0 0;
+}
+
+.nav-tabs .nav-link {
+  font-weight: 600;
+  color: #0d6efd;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: #e9ecef;
+  color: #0a58ca;
+}
+
+.card {
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card-body {
+  background-color: white;
+  border-radius: 20px;
+  padding: 25px;
+}
+
+.btn {
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
+}
+
+.alert-success {
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(25, 135, 84, 0.3);
+}
+
+.quiz-container {
+  margin-top: 30px;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  h1, h3 {
+    font-size: 1.5rem;
+  }
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .card-body {
+    padding: 15px;
+  }
+}

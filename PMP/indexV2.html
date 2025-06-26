@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portail PMP Certification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-color);
+            padding: 60px 0;
+            text-align: center;
+            border-bottom-left-radius: 50% 20%;
+            border-bottom-right-radius: 50% 20%;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dashboard-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dashboard-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .nav-pills .nav-link {
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            margin: 5px;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 1.5rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        .progress {
+            height: 25px;
+            background-color: var(--light-color);
+        }
+        
+        .progress-bar {
+            background-color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeeba;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #287bbd;
+            border-color: #287bbd;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .tab-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-pane h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .tab-pane p,
+        .tab-pane ul {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .tab-pane ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        
+        .tab-pane table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        
+        .tab-pane th,
+        .tab-pane td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .tab-pane th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .tab-pane tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-project-diagram me-2"></i>PMP Certification
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#dashboard">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#resources">Ressources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#quiz">Quiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="dashboard-header" id="dashboard">
+        <div class="container">
+            <h1>Portail PMP Certification</h1>
+            <p>Votre guide complet pour la certification Project Management Professional</p>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <section id="overview" class="mb-5">
+            <h2 class="text-center mb-4" style="color: var(--primary-color);">Découvrez la Certification PMP</h2>
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-10">
+                    <ul class="nav nav-pills nav-fill mb-3" id="pmpTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="intro-tab" data-bs-toggle="tab" data-bs-target="#intro" type="button" role="tab">Introduction</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="domains-tab" data-bs-toggle="tab" data-bs-target="#domains" type="button" role="tab">Domaines PMP</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="processes-tab" data-bs-toggle="tab" data-bs-target="#processes" type="button" role="tab">Processus</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="knowledge-tab" data-bs-toggle="tab" data-bs-target="#knowledge" type="button" role="tab">Bases de Connaissances</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pmpTabsContent">
+                        <div class="tab-pane fade show active" id="intro" role="tabpanel" aria-labelledby="intro-tab">
+                            <h3>Introduction à la Certification PMP</h3>
+                            <p>La certification PMP (Project Management Professional) est la certification la plus reconnue mondialement en gestion de projet, délivrée par le Project Management Institute (PMI).</p>
+                            <h4>Objectifs de la certification PMP</h4>
+                            <ul>
+                                <li>Valider vos compétences en gestion de projet selon les standards internationaux</li>
+                                <li>Démontrer votre maîtrise des méthodologies de gestion de projet</li>
+                                <li>Améliorer vos perspectives de carrière et votre rémunération</li>
+                                <li>Rejoindre un réseau mondial de professionnels certifiés</li>
+                            </ul>
+                            <h4>Examen PMP</h4>
+                            <p>L'examen PMP évalue votre compréhension des principes clés de gestion de projet selon le PMBOK Guide.</p>
+                            <ul>
+                                <li><strong>Structure de l'examen:</strong></li>
+                                <ul>
+                                    <li>180 questions (dont 175 notées)</li>
+                                    <li>Durée: 230 minutes</li>
+                                    <li>3 domaines principaux</li>
+                                    <li>Mix de questions à choix multiples, glisser-déposer, etc.</li>
+                                </ul>
+                            </ul>
+                            <h4>Pourquoi devenir PMP?</h4>
+                            <p>La certification PMP est un atout majeur pour les professionnels du management de projet:</p>
+                            <ul>
+                                <li>Reconnaissance mondiale</li>
+                                <li>Augmentation du salaire moyen</li>
+                                <li>Accès à un réseau professionnel</li>
+                                <li>Meilleures opportunités de carrière</li>
+                            </ul>
+                            <h4>Évolution du PMP</h4>
+                            <ul>
+                                <li><strong>1984:</strong> Première certification PMP</li>
+                                <li><strong>2000:</strong> Adoption du PMBOK Guide</li>
+                                <li><strong>2021:</strong> Nouveau format d'examen</li>
+                            </ul>
+                            <h4>Avantages pour les organisations</h4>
+                            <ol>
+                                <li>Meilleure réussite des projets</li>
+                                <li>Standardisation des pratiques</li>
+                                <li>Amélioration de la productivité</li>
+                                <li>Réduction des risques</li>
+                            </ol>
+                        </div>
+                        <div class="tab-pane fade" id="domains" role="tabpanel" aria-labelledby="domains-tab">
+                            <h3>Les 3 Domaines de Performance du PMP</h3>
+                            <p>L'examen PMP est structuré autour de trois domaines principaux qui couvrent l'ensemble du cycle de vie d'un projet.</p>
+                            <ul>
+                                <li>
+                                    <h4>PEOPLE (42%)</h4>
+                                    <p>Compétences liées à la gestion des parties prenantes et des équipes projet.</p>
+                                    <ul>
+                                        <li>Leadership d'équipe</li>
+                                        <li>Gestion des conflits</li>
+                                        <li>Communication efficace</li>
+                                        <li>Engagement des parties prenantes</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h4>PROCESS (50%)</h4>
+                                    <p>Aspects techniques de la gestion de projet selon les processus du PMBOK.</p>
+                                    <ul>
+                                        <li>Planification du projet</li>
+                                        <li>Gestion des risques</li>
+                                        <li>Contrôle des coûts</li>
+                                        <li>Suivi des délais</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h4>BUSINESS ENVIRONMENT (8%)</h4>
+                                    <p>Alignement du projet avec la stratégie globale de l'organisation.</p>
+                                    <ul>
+                                        <li>Analyse des besoins business</li>
+                                        <li>Gestion du changement organisationnel</li>
+                                        <li>Compliance et réglementation</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="processes" role="tabpanel" aria-labelledby="processes-tab">
+                            <h3>Les 49 Processus de Gestion de Projet</h3>
+                            <p>Le PMBOK Guide définit 49 processus répartis en 5 groupes de processus et 10 domaines de connaissances.</p>
+
+                            <h4>Tableau des processus par groupe et domaine</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Domaines de Connaissances</th>
+                                        <th>Initiating</th>
+                                        <th>Planning</th>
+                                        <th>Executing</th>
+                                        <th>Monitoring & Controlling</th>
+                                        <th>Closing</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Integration</td>
+                                        <td>Develop Project Charter</td>
+                                        <td>Develop Project Management Plan</td>
+                                        <td>Direct and Manage Project Work</td>
+                                        <td>Monitor and Control Project Work, Perform Integrated Change Control</td>
+                                        <td>Close Project or Phase</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Scope</td>
+                                        <td>-</td>
+                                        <td>Plan Scope Management, Collect Requirements, Define Scope, Create WBS</td>
+                                        <td>-</td>
+                                        <td>Validate Scope, Control Scope</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Schedule</td>
+                                        <td>-</td>
+                                        <td>Plan Schedule Management, Define Activities, Sequence Activities, Estimate Activity Durations, Develop Schedule</td>
+                                        <td>-</td>
+                                        <td>Control Schedule</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cost</td>
+                                        <td>-</td>
+                                        <td>Plan Cost Management, Estimate Costs, Determine Budget</td>
+                                        <td>-</td>
+                                        <td>Control Costs</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quality</td>
+                                        <td>-</td>
+                                        <td>Plan Quality Management</td>
+                                        <td>Manage Quality</td>
+                                        <td>Control Quality</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Resources</td>
+                                        <td>-</td>
+                                        <td>Plan Resource Management, Estimate Activity Resources</td>
+                                        <td>Acquire Resources, Develop Team, Manage Team</td>
+                                        <td>Control Resources</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Communications</td>
+                                        <td>-</td>
+                                        <td>Plan Communications Management</td>
+                                        <td>Manage Communications</td>
+                                        <td>Monitor Communications</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Risk</td>
+                                        <td>-</td>
+                                        <td>Plan Risk Management, Identify Risks, Perform Qualitative Risk Analysis, Perform Quantitative Risk Analysis, Plan Risk Responses</td>
+                                        <td>Implement Risk Responses</td>
+                                        <td>Monitor Risks</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Procurement</td>
+                                        <td>-</td>
+                                        <td>Plan Procurement Management</td>
+                                        <td>Conduct Procurements</td>
+                                        <td>Control Procurements</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Stakeholders</td>
+                                        <td>Identify Stakeholders</td>
+                                        <td>Plan Stakeholder Engagement</td>
+                                        <td>Manage Stakeholder Engagement</td>
+                                        <td>Monitor Stakeholder Engagement</td>
+                                        <td>-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <h4>Groupes de Processus</h4>
+                            <ol>
+                                <li><strong>Initiating:</strong> Définir le nouveau projet ou phase</li>
+                                <li><strong>Planning:</strong> Établir le périmètre, affiner les objectifs</li>
+                                <li><strong>Executing:</strong> Mettre en œuvre le plan</li>
+                                <li><strong>Monitoring & Controlling:</strong> Suivre, examiner et réguler</li>
+                                <li><strong>Closing:</strong> Finaliser toutes les activités</li>
+                            </ol>
+
+                            <h4>Domaines de Connaissances</h4>
+                            <ul>
+                                <li>Integration</li>
+                                <li>Scope</li>
+                                <li>Schedule</li>
+                                <li>Cost</li>
+                                <li>Quality</li>
+                                <li>Resources</li>
+                                <li>Communications</li>
+                                <li>Risk</li>
+                                <li>Procurement</li>
+                                <li>Stakeholders</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="knowledge" role="tabpanel" aria-labelledby="knowledge-tab">
+                            <h3>Bases de Connaissances PMP</h3>
+                            <p>Les concepts essentiels à maîtriser pour réussir l'examen PMP.</p>
+                            <ul>
+                                <li>
+                                    <h4>Triangle des Contraintes</h4>
+                                    <p>Également appelé "Triple Contrainte", il représente les trois principales variables d'un projet :</p>
+                                    <ul>
+                                        <li><strong>Scope:</strong> Périmètre du projet</li>
+                                        <li><strong>Time:</strong> Délais et échéances</li>
+                                        <li><strong>Cost:</strong> Budget et ressources</li>
+                                    </ul>
+                                    <p>Toute modification d'une contrainte affecte les deux autres.</p>
+                                </li>
+                                <li>
+                                    <h4>Cycle de Vie du Projet</h4>
+                                    <p>Les phases typiques d'un projet :</p>
+                                    <ol>
+                                        <li>Démarrage</li>
+                                        <li>Planification</li>
+                                        <li>Exécution</li>
+                                        <li>Surveillance et contrôle</li>
+                                        <li>Clôture</li>
+                                    </ol>
+                                    <p>Chaque phase a des objectifs et livrables spécifiques.</p>
+                                </li>
+                                <li>
+                                    <h4>Parties Prenantes</h4>
+                                    <p>Individus ou organisations impactés par le projet :</p>
+                                    <ul>
+                                        <li>Client</li>
+                                        <li>Équipe projet</li>
+                                        <li>Sponsor</li>
+                                        <li>Fournisseurs</li>
+                                    </ul>
+                                    <p>L'identification et la gestion des parties prenantes sont cruciales.</p>
+                                </li>
+                                <li>
+                                    <h4>Gestion des Risques</h4>
+                                    <p>Processus pour identifier, analyser et répondre aux risques :</p>
+                                    <ul>
+                                        <li>Identification des risques</li>
+                                        <li>Analyse qualitative/quantitative</li>
+                                        <li>Plan de réponse</li>
+                                        <li>Surveillance</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h4>WBS (Work Breakdown Structure)</h4>
+                                    <p>Décomposition hiérarchique du travail :</p>
+                                    <ul>
+                                        <li>Divise le projet en éléments gérables</li>
+                                        <li>Base pour l'estimation et le planning</li>
+                                        <li>Niveaux : Projet > Lots de travail > Packages de travail > Activités</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h4>Méthodes Agile</h4>
+                                    <p>Approches itératives et adaptatives :</p>
+                                    <ul>
+                                        <li>Scrum</li>
+                                        <li>Kanban</li>
+                                        <li>Lean</li>
+                                        <li>Extreme Programming</li>
+                                    </ul>
+                                    <p>De plus en plus présentes dans l'examen PMP.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="key-features" class="mb-5">
+            <h2 class="text-center mb-5" style="color: var(--primary-color);">Fonctionnalités Clés</h2>
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-book feature-icon"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: var(--primary-color);">Ressources Complètes</h5>
+                            <p class="card-text">Accédez à des guides détaillés, des fiches de révision et des articles sur les concepts PMP.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-question-circle feature-icon"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: var(--primary-color);">Quiz Interactifs</h5>
+                            <p class="card-text">Testez vos connaissances avec des quiz adaptés aux différents domaines de l'examen.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line feature-icon"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: var(--primary-color);">Suivi de Progression</h5>
+                            <p class="card-text">Visualisez votre évolution et identifiez les domaines à améliorer pour votre préparation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="mb-5">
+            <h2 class="text-center mb-4" style="color: var(--primary-color);">Entraînez-vous avec nos Quiz</h2>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-brain me-2"></i> Quiz Simple (5 Questions)
+                </div>
+                <div class="card-body">
+                    <div id="quizSimpleContainer">
+                        <h4 id="quizSimpleQuestion">Question ici ?</h4>
+                        <div id="quizSimpleOptions" class="list-group">
+                            </div>
+                        <button id="nextSimpleQuestionBtn" class="btn btn-primary mt-3">Question Suivante</button>
+                    </div>
+                    <div id="quizSimpleResults" style="display:none;">
+                        <h4>Vos Résultats du Quiz Simple</h4>
+                        <p>Score : <span id="finalSimpleScore"></span> / <span id="totalSimpleQuestions"></span></p>
+                        <div class="progress mb-3">
+                            <div id="progressBarSimpleScore" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div id="recommendationsSimple" class="alert mt-4" role="alert">
+                            </div>
+                        <button id="retakeSimpleQuizBtn" class="btn btn-secondary mt-3">Refaire le Quiz</button>
+                        <button id="restartSimpleQuizBtn" class="btn btn-danger mt-3">Recommencer</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-cogs me-2"></i> Quiz Avancé (10 Questions)
+                </div>
+                <div class="card-body">
+                    <p>Ce quiz couvre des scénarios plus complexes et des concepts avancés du PMP. Préparez-vous !</p>
+                    <button class="btn btn-warning" disabled>Bientôt disponible</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="mb-5">
+            <h2 class="text-center mb-4" style="color: var(--primary-color);">Ressources Utiles</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: var(--primary-color);">Guide PMBOK (Dernière Édition)</h5>
+                            <p class="card-text">La référence incontournable pour la préparation PMP. Téléchargez la dernière version.</p>
+                            <a href="#" class="btn btn-primary">Télécharger</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: var(--primary-color);">Forum de Discussion PMP</h5>
+                            <p class="card-text">Échangez avec d'autres candidats et des professionnels certifiés.</p>
+                            <a href="#" class="btn btn-primary">Rejoindre le Forum</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="text-center mb-4" style="color: var(--primary-color);">Nous Contacter</h2>
+            <p class="text-center">Avez-vous des questions ou besoin d'assistance ? N'hésitez pas à nous contacter !</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nom Complet</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Adresse Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Votre Message</label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer le Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-5">
+        <div class="container">
+            <p>&copy; 2025 Portail PMP Certification. Tous droits réservés.</p>
+            <p>Conçu avec <i class="fas fa-heart" style="color: var(--accent-color);"></i> pour la communauté PMP.</p>
+            <p>
+                <a href="#">Politique de Confidentialité</a> | 
+                <a href="#">Conditions d'Utilisation</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const quizSimpleQuestions = [
+            {
+                question: "Quel est le pourcentage de questions du domaine 'People' dans l'examen PMP actuel ?",
+                options: ["30%", "42%", "50%", "8%"],
+                answer: "42%"
+            },
+            {
+                question: "Quel document autorise formellement l'existence d'un projet ?",
+                options: ["Plan de gestion de projet", "Charte de projet", "Énoncé du périmètre du projet", "Registre des risques"],
+                answer: "Charte de projet"
+            },
+            {
+                question: "Combien de groupes de processus sont définis dans le PMBOK Guide ?",
+                options: ["4", "5", "6", "10"],
+                answer: "5"
+            },
+            {
+                question: "Quelle est la durée de l'examen PMP ?",
+                options: ["180 minutes", "200 minutes", "230 minutes", "240 minutes"],
+                answer: "230 minutes"
+            },
+            {
+                question: "Parmi les éléments suivants, lequel fait partie du 'Triple Contrainte' d'un projet ?",
+                options: ["Risque", "Communication", "Qualité", "Périmètre"],
+                answer: "Périmètre"
+            }
+        ];
+
+        let currentQuizSimpleQuestionIndex = 0;
+        let quizSimpleScore = 0;
+
+        const quizSimpleContainer = document.getElementById('quizSimpleContainer');
+        const quizSimpleQuestion = document.getElementById('quizSimpleQuestion');
+        const quizSimpleOptions = document.getElementById('quizSimpleOptions');
+        const nextSimpleQuestionBtn = document.getElementById('nextSimpleQuestionBtn');
+        const quizSimpleResults = document.getElementById('quizSimpleResults');
+        const finalSimpleScore = document.getElementById('finalSimpleScore');
+        const totalSimpleQuestions = document.getElementById('totalSimpleQuestions');
+        const progressBarSimpleScore = document.getElementById('progressBarSimpleScore');
+        const recommendationsSimple = document.getElementById('recommendationsSimple');
+        const retakeSimpleQuizBtn = document.getElementById('retakeSimpleQuizBtn');
+        const restartSimpleQuizBtn = document.getElementById('restartSimpleQuizBtn');
+
+        function loadQuizSimpleQuestion() {
+            if (currentQuizSimpleQuestionIndex < quizSimpleQuestions.length) {
+                const currentQuestion = quizSimpleQuestions[currentQuizSimpleQuestionIndex];
+                quizSimpleQuestion.textContent = currentQuestion.question;
+                quizSimpleOptions.innerHTML = '';
+                currentQuestion.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'list-group-item list-group-item-action mb-2';
+                    button.textContent = option;
+                    button.onclick = () => selectSimpleOption(option, currentQuestion.answer);
+                    quizSimpleOptions.appendChild(button);
+                });
+                nextSimpleQuestionBtn.style.display = 'none'; // Hide next button until an option is selected
+            } else {
+                showQuizSimpleResults();
+            }
+        }
+
+        function selectSimpleOption(selectedOption, correctAnswer) {
+            // Disable all options once one is selected
+            Array.from(quizSimpleOptions.children).forEach(button => {
+                button.disabled = true;
+                if (button.textContent === correctAnswer) {
+                    button.classList.add('list-group-item-success');
+                } else if (button.textContent === selectedOption) {
+                    button.classList.add('list-group-item-danger');
+                }
+            });
+
+            if (selectedOption === correctAnswer) {
+                quizSimpleScore++;
+            }
+            nextSimpleQuestionBtn.style.display = 'block'; // Show next button
+        }
+
+        function showNextQuizSimpleQuestion() {
+            currentQuizSimpleQuestionIndex++;
+            loadQuizSimpleQuestion();
+        }
+
+        function showQuizSimpleResults() {
+            quizSimpleContainer.style.display = 'none';
+            quizSimpleResults.style.display = 'block';
+            finalSimpleScore.textContent = quizSimpleScore;
+            totalSimpleQuestions.textContent = quizSimpleQuestions.length;
+
+            const percentage = (quizSimpleScore / quizSimpleQuestions.length) * 100;
+            progressBarSimpleScore.style.width = percentage + '%';
+            progressBarSimpleScore.setAttribute('aria-valuenow', percentage);
+
+            if (percentage >= 80) {
+                recommendationsSimple.className = 'alert mt-4 alert-success';
+                recommendationsSimple.innerHTML = `<h5><i class="fas fa-trophy me-2"></i>Excellent !</h5><p>Vous avez atteint l'objectif de 80% ! Votre maîtrise des fondamentaux est bonne.</p>`;
+            } else {
+                recommendationsSimple.className = 'alert mt-4 alert-warning';
+                recommendationsSimple.innerHTML = `<h5><i class="fas fa-lightbulb me-2"></i>Besoin de revoir !</h5><p>Ciblez les domaines où vous avez rencontré des difficultés. Continuez à vous entraîner !</p>`;
+            }
+        }
+
+        function resetQuizSimple() {
+            currentQuizSimpleQuestionIndex = 0;
+            quizSimpleScore = 0;
+            quizSimpleContainer.style.display = 'block';
+            quizSimpleResults.style.display = 'none';
+            loadQuizSimpleQuestion();
+        }
+
+        // Event Listeners for Quiz Simple
+        nextSimpleQuestionBtn.addEventListener('click', showNextQuizSimpleQuestion);
+        retakeSimpleQuizBtn.addEventListener('click', resetQuizSimple);
+        restartSimpleQuizBtn.addEventListener('click', resetQuizSimple);
+
+        // Initial load
+        loadQuizSimpleQuestion();
+    </script>
+</body>
+</html>

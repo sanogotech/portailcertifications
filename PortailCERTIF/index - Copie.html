@@ -3,197 +3,285 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portail Certifications Projet & IT | GS2E Academy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Portail Certifications Projet & IT</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Effets supplémentaires spécifiques */
-    .hero-section {
-      position: relative;
-      height: 90vh;
-      min-height: 600px;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+
+ 
+/* Hero section principale */
+.hero-section {
+  background: linear-gradient(135deg, #ff7f27, #ffffff, #00a651); /* Orange -> Blanc -> Vert */
+  color: white;
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet visuel décoratif avec teintes ivoiriennes */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 127, 39, 0.2) 0%,   /* Orange */
+    rgba(255, 255, 255, 0.1) 35%, /* Blanc translucide */
+    rgba(0, 166, 81, 0.1) 70%,    /* Vert */
+    rgba(255, 255, 255, 0) 100%   /* Fading */
+  );
+  transform: rotate(30deg);
+  z-index: 1;
+}
+
+
+.hero-section h1  {
+    color: rgba(0,0,0,0.9); /* Noir avec 90% d'opacité */
+    text-shadow: 
+        0 2px 4px rgba(255,255,255,0.3), /* Ombre blanche pour effet de profondeur */
+        0 4px 8px rgba(0,0,0,0.1); /* Ombre noire subtile */
+    transition: all 0.3s ease;
+}
+
+/* Effet au survol pour interactivité */
+.hero-section h1:hover i {
+    color: rgba(0,0,0,1); /* Noir pur au survol */
+    text-shadow: 
+        0 3px 6px rgba(255,255,255,0.4),
+        0 6px 12px rgba(0,0,0,0.15);
+    transform: scale(1.05);
+}
+
+/* Onglets avec style dynamique */
+.nav-tabs .nav-link {
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  color: #495057;
+  border: none;
+  position: relative;
+  transition: all 0.3s;
+  background: transparent;
+}
+
+/* Onglet actif avec couleur ivoirienne dominante (orange-vert) */
+.nav-tabs .nav-link.active {
+  color: #00a651;
+  background: transparent;
+}
+
+/* Soulignement dynamique des onglets actifs */
+.nav-tabs .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 3px;
+  background: linear-gradient(to right, #ff7f27, #00a651);
+  border-radius: 3px 3px 0 0;
+}
+
+/* Hover des onglets inactifs */
+.nav-tabs .nav-link:hover:not(.active) {
+  color: #ff7f27;
+  transform: translateY(-2px);
+}
+
+/* Style du texte principal avec animation douce */
+.hero-section p.lead {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95); /* Blanc presque pur pour lisibilité */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Légère ombre pour contraste */
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+  line-height: 1.6;
+  border-left: 5px solid #ff7f27; /* Marque visuelle orange ivoirien */
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05); /* léger fond translucide */
+}
+
+/* Animation déjà fournie par animate.css */
+.animate__animated.animate__fadeIn.animate__delay-1s {
+  animation-delay: 1s;
+}
+
+
+    
+    .cert-card {
+      border: none;
+      border-radius: 15px;
       overflow: hidden;
-      display: flex;
-      align-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      background: white;
+    }
+    
+    .cert-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+    
+    .cert-header {
+      padding: 1.5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cert-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.1);
+    }
+    
+    .capm-header { background: var(--primary-gradient); }
+    .pmp-header { background: var(--secondary-gradient); }
+    .prince2-header { background: var(--success-gradient); }
+    .scrum-header { background: linear-gradient(135deg, #f46b45 0%, #eea849 100%); }
+    .itil-header { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+    .cobit-header { background: linear-gradient(135deg, #8e0e00 0%, #1f1c18 100%); }
+    .togaf-header { background: var(--dark-gradient); }
+    
+    .cert-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    .quiz-btn {
+      border: none;
+      background: var(--primary-gradient);
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(58, 123, 213, 0.3);
+    }
+    
+    .quiz-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(58, 123, 213, 0.4);
       color: white;
     }
     
-    .hero-overlay {
+    .feature-badge {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.7) 100%);
+      top: -10px;
+      right: -10px;
+      background: #ff4757;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      box-shadow: 0 2px 10px rgba(255, 71, 87, 0.5);
     }
     
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    
-    .hero-logo {
-      height: 80px;
-      margin-bottom: 2rem;
-      filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-    }
-    
-    .hero-title {
-      font-size: 3.5rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-    
-    .title-gradient {
-      background: linear-gradient(90deg, #ff7f27, #00a651, #0066cc);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
-    }
-    
-    .title-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.2);
-      backdrop-filter: blur(10px);
-      padding: 0.25rem 1rem;
-      border-radius: 50px;
-      font-size: 1rem;
-      vertical-align: super;
-      margin-left: 1rem;
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-    
-    .hero-subtitle {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-    
-    .hero-cta .btn {
-      margin: 0 0.5rem;
-      padding: 0.75rem 2rem;
-      font-weight: 600;
-      border-radius: 50px;
-      transition: all 0.3s ease;
-    }
-    
-    .btn-glow {
-      box-shadow: 0 0 15px rgba(0, 166, 81, 0.5);
-    }
-    
-    .btn-glow:hover {
-      box-shadow: 0 0 25px rgba(0, 166, 81, 0.8);
-    }
-    
-    /* Animation des cartes de certification */
-    .cert-card {
-      perspective: 1000px;
-    }
-    
-    .cert-card-inner {
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-    }
-    
-    .cert-card:hover .cert-card-inner {
-      transform: rotateY(10deg);
-    }
-    
-    /* Particules JS container */
-    #particles-js {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 1;
+    @media (max-width: 768px) {
+      .nav-tabs .nav-link {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+      
+      .hero-section {
+        padding: 2rem 0;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Hero Section Redesignée -->
-  <section class="hero-section">
-    <div class="hero-overlay"></div>
-    <div id="particles-js"></div>
+  <section class="hero-section text-center">
     <div class="container position-relative" style="z-index: 2;">
-      <div class="hero-content animate__animated animate__fadeInDown">
-        <img src="logogs2e.jpg" alt="GS2E Academy" class="hero-logo">
-        <h1 class="hero-title">
-          <span class="title-gradient">Portail des Certifications</span>
-          <span class="title-gradient">GS2E Academy</span>
-        </h1>
-        <p class="hero-subtitle">Votre passerelle vers l'excellence professionnelle en gestion de projet et IT</p>
-       <div class="hero-cta">
-		  <a href="#certTabs" class="btn btn-primary btn-glow">
-			<i class="fas fa-rocket me-2"></i> Explorer
-		  </a>
-		</div>
-      </div>
-    </div>
+      <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInDown">
+        <i class="fas fa-certificate me-2"></i>Portail des Certifications
+      </h1>
+     <p class="lead mb-4 animate__animated animate__fadeIn animate__delay-1s" 
+   style="color: #0066cc; 
+          text-shadow: 0 2px 4px rgba(0,102,204,0.2);
+          font-weight: 500;
+          background: linear-gradient(to right, #0066cc, #0099ff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;">
+  Votre passerelle vers les certifications Projet & IT les plus reconnues
+</p>
+
+<img src="logogs2e.jpg" alt="Logo de MonSite" width="120">
+      
   </section>
 
   <div class="container py-5">
-    <!-- Navigation par onglets améliorée -->
     <ul class="nav nav-tabs justify-content-center mb-4" id="certTabs" role="tablist">
-      <li class="nav-item" role="presentation">
+	
+	  <li class="nav-item" role="presentation">
         <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#guide" type="button">
-          <i class="fas fa-book-open me-2"></i>GS2E Academy
+          <i class="fas fa-book-open me-2"></i>GS2E  ACADEMY
         </button>
       </li>
+	  
       <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#capm" type="button">
+        <button class="nav-link" id="capm-tab" data-bs-toggle="tab" data-bs-target="#capm" type="button">
           <i class="fas fa-certificate me-2"></i>CAPM
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pmp" type="button">
+        <button class="nav-link" id="pmp-tab" data-bs-toggle="tab" data-bs-target="#pmp" type="button">
           <i class="fas fa-award me-2"></i>PMP
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#prince2" type="button">
+        <button class="nav-link" id="prince2-tab" data-bs-toggle="tab" data-bs-target="#prince2" type="button">
           <i class="fas fa-chess me-2"></i>PRINCE2
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#scrum" type="button">
+        <button class="nav-link" id="scrum-tab" data-bs-toggle="tab" data-bs-target="#scrum" type="button">
           <i class="fas fa-arrows-rotate me-2"></i>SCRUM
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#itil" type="button">
+        <button class="nav-link" id="itil-tab" data-bs-toggle="tab" data-bs-target="#itil" type="button">
           <i class="fas fa-server me-2"></i>ITIL
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#cobit" type="button">
+        <button class="nav-link" id="cobit-tab" data-bs-toggle="tab" data-bs-target="#cobit" type="button">
           <i class="fas fa-shield-alt me-2"></i>COBIT
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#togaf" type="button">
+        <button class="nav-link" id="togaf-tab" data-bs-toggle="tab" data-bs-target="#togaf" type="button">
           <i class="fas fa-building me-2"></i>TOGAF
         </button>
       </li>
-      <li class="nav-item" role="presentation">
+	  
+	    <li class="nav-item" role="presentation">
         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#learn" type="button">
           <i class="fas fa-graduation-cap me-2"></i>LEARN
         </button>
       </li>
+	     
       <li class="nav-item" role="presentation">
         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#quiz" type="button">
           <i class="fas fa-question-circle me-2"></i>QUIZ
         </button>
       </li>
+    
     </ul>
 
         <div class="tab-content" id="certTabsContent">
@@ -1204,43 +1292,7 @@
     </div>
   </div>
 
-   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script>
-    // Initialisation des particules
-    document.addEventListener('DOMContentLoaded', function() {
-      particlesJS('particles-js', {
-        "particles": {
-          "number": {"value": 80, "density": {"enable": true, "value_area": 800}},
-          "color": {"value": "#ffffff"},
-          "shape": {"type": "circle"},
-          "opacity": {"value": 0.5, "random": true},
-          "size": {"value": 3, "random": true},
-          "line_linked": {"enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.3, "width": 1},
-          "move": {"enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out"}
-        },
-        "interactivity": {
-          "detect_on": "canvas",
-          "events": {
-            "onhover": {"enable": true, "mode": "repulse"},
-            "onclick": {"enable": true, "mode": "push"}
-          }
-        }
-      });
-    });
-
-    // Animation au scroll
-    window.addEventListener('scroll', function() {
-      const elements = document.querySelectorAll('.cert-card, .nav-link');
-      elements.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) {
-          el.classList.add('animate-in');
-        }
-      });
-    });
-  </script>
   <script src="quiz.js"></script>
   <script src="learn.js"></script>
 </body>
